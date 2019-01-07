@@ -72,13 +72,13 @@ span {
   background-color: #09a748;
 }
 .green {
-  color: #09a748;
+  color: #09a748;#1ed675
 }
 .gradient-green-bg {
   background: #09a748; /* Old browsers */
   background: -moz-linear-gradient(left, #09a748 0%, #00b348 50%, #00cc2c 100%); /* FF3.6-15 */
   background: -webkit-linear-gradient(left, #09a748 0%, #00b348 50%, #00cc2c 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to right, #09a748 0%, #00b348 50%, #00cc2c 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background: linear-gradient(to right, #41a2c7 0%, #00b348 50%, #56e275 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#09a748', endColorstr='#00cc2c',GradientType=1 ); /* IE6-9 */
 }
 

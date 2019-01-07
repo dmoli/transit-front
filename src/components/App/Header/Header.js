@@ -21,7 +21,7 @@ Router.onRouteChangeError = () => NProgress.done();
 class Header extends Component {
   render() {
     return (
-      <ContainerHeader className='white-bg'>
+      <ContainerHeader className='gradient-green-bg'>
         <Link href='/'>
           <a>
             <Logotipo>
