@@ -3,15 +3,35 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import Map from '../../Elements/Map';
+import Tabs from '../Tabs';
 
 
 /**
- * Componente principal
+ * Main component
  */
 class Main extends Component {
+  constructor() {
+    super();
+    this.state = {
+      /* current tab name */
+      currentTabName: 'routes',
+    };
+
+    this.handleTabName = this.handleTabName.bind(this);
+  }
+
+  /**
+   * Handle tabs behavior
+   *
+  * @param tabName tab name
+   */
+  handleTabName(tabName) {
+    this.setState({ currentTabName: tabName });
+  }
+
   render() {
     const center = { lat: -33.4314474, lng: -70.6093325 };
-
+    const { currentTabName } = this.state;
     return (
       <ContainerMain>
         <ContainerMap>
@@ -21,9 +41,12 @@ class Main extends Component {
             zoomCustom={10}
           />
         </ContainerMap>
-        <ContainerRoutes>
-
-        </ContainerRoutes>
+        <InfoCard>
+          <Tabs
+            selected={currentTabName}
+            onChangeTab={this.handleTabName}
+          />
+        </InfoCard>
       </ContainerMain>
     );
   }
@@ -50,7 +73,7 @@ const ContainerMap = styled.section`
   }
 `;
 
-const ContainerRoutes = styled.section`
+const InfoCard = styled.section`
   width: 100%;
   height: 50vh;
   background: #ff0;

@@ -78,6 +78,7 @@ const Tab = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 20px 40px;
+  border-bottom: 3px solid transparent;
   :hover {
     cursor: pointer;
   }
