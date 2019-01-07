@@ -4,6 +4,8 @@ import styled from 'styled-components';
 
 import Map from '../../Elements/Map';
 import Tabs from '../Tabs';
+import RoutesList from '../RoutesList';
+import FavouritesList from '../FavouritesList';
 
 
 /**
@@ -18,6 +20,7 @@ class Main extends Component {
     };
 
     this.handleTabName = this.handleTabName.bind(this);
+    this.handleFavourites = this.handleFavourites.bind(this);
   }
 
   /**
@@ -27,6 +30,15 @@ class Main extends Component {
    */
   handleTabName(tabName) {
     this.setState({ currentTabName: tabName });
+  }
+
+  /**
+   * Handle favourite behavior
+   *
+  * @param item item route
+   */
+  handleFavourites(item) {
+    console.log('item', item);
   }
 
   render() {
@@ -41,12 +53,28 @@ class Main extends Component {
             zoomCustom={10}
           />
         </ContainerMap>
-        <InfoCard>
+        <ContainerResults>
           <Tabs
             selected={currentTabName}
             onChangeTab={this.handleTabName}
           />
-        </InfoCard>
+          {
+            currentTabName === 'routes' && (
+              <RoutesList
+                items={[]}
+                onClickToggleFavorite={this.handleFavourites}
+              />
+            )
+          }
+          {
+            currentTabName === 'favourites' && (
+              <FavouritesList
+                items={[]}
+                onClickToggleFavorite={this.handleFavourites}
+              />
+            )
+          }
+        </ContainerResults>
       </ContainerMain>
     );
   }
@@ -73,7 +101,7 @@ const ContainerMap = styled.section`
   }
 `;
 
-const InfoCard = styled.section`
+const ContainerResults = styled.section`
   width: 100%;
   height: 50vh;
   background: #ff0;

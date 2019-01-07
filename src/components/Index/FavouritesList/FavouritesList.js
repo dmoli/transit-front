@@ -44,6 +44,7 @@ const ContainerFavouritesList = styled.section`
   position: relative;
   align-items: center;
   padding: 30px 0 13px 0;
+  background: #00f;
 `;
 
 export default FavouritesList;
