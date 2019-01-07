@@ -1,0 +1,18 @@
+/* eslint import/no-extraneous-dependencies: [0] */
+import React from 'react';
+import { storiesOf } from '@storybook/react';
+import { withInfo } from '@storybook/addon-info';
+import { Provider } from 'react-redux';
+
+import Route from './Route';
+import { initStore } from '../../../redux/store';
+
+const store = initStore();
+
+storiesOf('Index/Route', module)
+  .addDecorator(story => <Provider store={store}>{story()}</Provider>)
+  .add('Route',
+    withInfo('Route')(() =>
+      <Route />,
+    ),
+  );
