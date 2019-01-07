@@ -2,14 +2,28 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
+import Map from '../../Elements/Map';
+
+
 /**
  * Componente principal
  */
 class Main extends Component {
   render() {
+    const center = { lat: -33.4314474, lng: -70.6093325 };
+
     return (
       <ContainerMain>
-        <Background />
+        <ContainerMap>
+          <Map
+            center={center}
+            markers={[]}
+            zoomCustom={10}
+          />
+        </ContainerMap>
+        <ContainerRoutes>
+
+        </ContainerRoutes>
       </ContainerMain>
     );
   }
@@ -23,21 +37,26 @@ const ContainerMain = styled.section`
   background-size: cover;
   background-position: center center;
   /* padding-top: 64px; */
+  @media all and (max-width: 704px) {
+    flex-direction: row;
+  }
 `;
 
-const Background = styled.section`
+const ContainerMap = styled.section`
   width: 100%;
-  height: 100vh;
-  background-image:
-  -webkit-gradient(linear,right top,left top, color-stop(20%,rgb(4, 203, 122)),
-  color-stop(85%,rgba(0,0,0,0)));
-  background-image: -webkit-linear-gradient(right,rgb(4, 203, 122, 0.78) 20%,rgb(0, 156, 255, 0.78));
-  background-image: -moz-linear-gradient(right,rgb(4, 203, 122, 0.78) 20%,rgb(0, 156, 255, 0.78));
-  background-image: -o-linear-gradient(right,rgb(4, 203, 122, 0.78) 20%,rgb(0, 156, 255, 0.78));
-  background-image: linear-gradient(to left,rgb(4, 203, 122, 0.78) 20%,rgb(0, 156, 255, 0.78));
-  position: absolute;
-  left: 0px;
-  top: 0px;
+  height: 50vh;
+  @media all and (max-width: 704px) {
+    order: 2;
+  }
+`;
+
+const ContainerRoutes = styled.section`
+  width: 100%;
+  height: 50vh;
+  background: #ff0;
+  @media all and (max-width: 704px) {
+    order: 1;
+  }
 `;
 
 export default Main;
