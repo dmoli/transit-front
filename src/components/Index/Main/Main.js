@@ -47,7 +47,7 @@ class Main extends Component {
     const response = await this.getRoutes();
     // transform to object a put in the state
     const routes = await response.json();
-    this.setState({ routes });
+    this.setState({ routes: this.setRoute(routes) });
   }
 
   /**
@@ -71,21 +71,70 @@ class Main extends Component {
   }
 
   /**
+   * Get routes
+   *
+   * @return array of routes seted
+   */
+  setRoute(routes) {
+    // get routes from API
+    const setedRoutes = routes;
+    setedRoutes.forEach((entity, i) => {
+      const entitySeted = entity;
+      entitySeted.isFav = false;
+      setedRoutes[i] = entitySeted;
+    });
+
+    return setedRoutes;
+  }
+
+  /**
+   * Get routes by id
+   *
+   * @param {int} routeId route id
+   * @param {array} routes list of routes
+   * @param {string} action name of action
+   * @return array of routes seted
+   */
+  setRouteById(routeId, routes, action) {
+    // get routes from API
+    const setedRoutes = routes;
+    let i = 0;
+    for (const entity of setedRoutes) {
+      if (routeId === entity.route_id) {
+        const entitySeted = entity;
+        // action to favorite
+        if (action === 'fav') entitySeted.isFav = true;
+        // action to unfavorite
+        if (action === 'unfav') entitySeted.isFav = false;
+        setedRoutes[i] = entitySeted;
+        break;
+      }
+      i += 1;
+    }
+    return setedRoutes;
+  }
+
+  /**
    * Handle tabs behavior
    *
-  * @param tabName tab name
+  * @param {string} tabName tab name
    */
   handleTabName(tabName) {
     this.setState({ currentTabName: tabName });
   }
 
   /**
-   * Handle favourite behavior
+   * Handle favourite actions
    *
-  * @param item item route
+   * @param {int} routeId route id
+   * @param {string} action action name, favourite or unfavourite
+   * @return array of routes seted
    */
-  handleFavourites(item) {
-    console.log('item', item);
+  handleFavourites(routeId, action) {
+    // create a deep copy of routes to keep immutability
+    const routes = JSON.parse(JSON.stringify(this.state.routes));
+    // set favourite field and set state to refresh
+    this.setState({ routes: this.setRouteById(routeId, routes, action) });
   }
 
   render() {
@@ -150,7 +199,6 @@ const ContainerMap = styled.section`
 const ContainerResults = styled.section`
   width: 100%;
   height: 50vh;
-  background: #ff0;
   @media all and (max-width: 704px) {
     order: 2;
   }

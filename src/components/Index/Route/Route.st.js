@@ -2,6 +2,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
+import { action } from '@storybook/addon-actions';
 import { Provider } from 'react-redux';
 
 import Route from './Route';
@@ -16,6 +17,9 @@ storiesOf('Index/Route', module)
   .addDecorator(story => <Provider store={store}>{story()}</Provider>)
   .add('Route',
     withInfo('Route')(() =>
-      <Route item={route} />,
+      <Route
+        item={route}
+        onClickToggleFavorite={action('onClickToggleFavorite')}
+      />,
     ),
   );
