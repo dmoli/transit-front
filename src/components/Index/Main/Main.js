@@ -93,13 +93,6 @@ class Main extends Component {
     const { currentTabName, routes } = this.state;
     return (
       <ContainerMain>
-        <ContainerMap>
-          <Map
-            center={center}
-            markers={[]}
-            zoomCustom={10}
-          />
-        </ContainerMap>
         <ContainerResults>
           <Tabs
             selected={currentTabName}
@@ -122,6 +115,13 @@ class Main extends Component {
             )
           }
         </ContainerResults>
+        <ContainerMap>
+          <Map
+            center={center}
+            markers={[]}
+            zoomCustom={10}
+          />
+        </ContainerMap>
       </ContainerMain>
     );
   }
@@ -129,14 +129,13 @@ class Main extends Component {
 
 const ContainerMain = styled.section`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   background-attachment: fixed;
   background-size: cover;
   background-position: center center;
-  /* padding-top: 64px; */
   @media all and (max-width: 704px) {
-    flex-direction: row;
+    flex-direction: column;
   }
 `;
 
@@ -144,7 +143,7 @@ const ContainerMap = styled.section`
   width: 100%;
   height: 50vh;
   @media all and (max-width: 704px) {
-    order: 2;
+    order: 1;
   }
 `;
 
@@ -153,7 +152,7 @@ const ContainerResults = styled.section`
   height: 50vh;
   background: #ff0;
   @media all and (max-width: 704px) {
-    order: 1;
+    order: 2;
   }
 `;
 
