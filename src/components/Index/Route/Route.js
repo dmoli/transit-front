@@ -12,6 +12,7 @@ class Route extends Component {
 
     return (
       <ContainerRoute
+        key={item.route_id}
         background={item.route_color}
         color={item.route_text_color}
       >

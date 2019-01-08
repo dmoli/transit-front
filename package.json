@@ -16,7 +16,7 @@
     "storybook": "start-storybook -p 9001 -s ./ -c .storybook",
     "test": "jest",
     "eslint": "eslint .",
-    "dev": "node server.js",
+    "dev": "NODE_ENV=development node server.js",
     "build": "next build && node ./src/scripts/default-lang",
     "start": "NODE_ENV=production node server.js"
   },
