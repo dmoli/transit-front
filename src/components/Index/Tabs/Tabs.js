@@ -69,7 +69,6 @@ const ContainerTabs = styled.section`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 30px 0;
   width: 100%;
 `;
 
@@ -77,7 +76,7 @@ const Tab = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 40px;
+  padding: 5px 13px;
   border-bottom: 3px solid transparent;
   :hover {
     cursor: pointer;

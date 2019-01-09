@@ -167,28 +167,29 @@ class Main extends Component {
 
     return (
       <ContainerMain>
-        <ContainerResults>
-          <Tabs
-            selected={currentTabName}
-            onChangeTab={this.handleTabName}
-          />
-          {
-            currentTabName === 'routes' && (
-              <RoutesList
-                items={routes.entities}
-                onClickToggleFavorite={this.handleFavourites}
+        <ContainerInfo>
+          <ContainerOptions>
+            <ContainerSearch></ContainerSearch>
+            <ContainerTabs>
+              <Tabs
+                selected={currentTabName}
+                onChangeTab={this.handleTabName}
               />
-            )
-          }
-          {
-            currentTabName === 'favourites' && (
-              <FavouritesList
-                items={favourites.entities}
-                onClickToggleFavorite={this.handleFavourites}
-              />
-            )
-          }
-        </ContainerResults>
+            </ContainerTabs>
+          </ContainerOptions>
+          <ContainerResults show={currentTabName === 'routes'}>
+            <RoutesList
+              items={routes.entities}
+              onClickToggleFavorite={this.handleFavourites}
+            />
+          </ContainerResults>
+          <ContainerResults show={currentTabName === 'favourites'}>
+            <FavouritesList
+              items={favourites.entities}
+              onClickToggleFavorite={this.handleFavourites}
+            />
+          </ContainerResults>
+        </ContainerInfo>
         <ContainerMap>
           <Map
             center={center}
@@ -223,9 +224,6 @@ const ContainerMain = styled.section`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center center;
   @media all and (max-width: 704px) {
     flex-direction: column;
   }
@@ -240,19 +238,54 @@ const ContainerLoading = styled.section`
 `;
 
 const ContainerMap = styled.section`
-  width: 100%;
-  height: 50vh;
+  width: 50%;
+  height: 100vh;
   @media all and (max-width: 704px) {
     order: 1;
   }
 `;
 
-const ContainerResults = styled.section`
-  width: 100%;
-  height: 50vh;
+const ContainerInfo = styled.section`
+  width: 50%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
   @media all and (max-width: 704px) {
     order: 2;
   }
+`;
+
+const ContainerOptions = styled.section`
+  width: 100%;
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+`;
+
+const ContainerSearch = styled.section`
+  width: 100%;
+  background-color: #f00;
+  height: 50%;
+  flex-grow: 1;
+`;
+
+const ContainerTabs = styled.section`
+  width: 100%;
+  height: 30px;
+  background-color: #f0f;
+`;
+
+const ContainerResults = styled.section`
+  width: 100%;
+  height: 70vh;
+  overflow-y: scroll;
+  max-height: 100%;
+  ${props => props.show === true && `
+    display: block;
+  `}
+  ${props => props.show === false && `
+    display: none;
+  `}
 `;
 
 const ContainerError = styled.section`
