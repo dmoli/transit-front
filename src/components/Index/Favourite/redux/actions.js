@@ -101,12 +101,12 @@ export const remove = routeId => (
     for (const entity of setedFavourites) {
       if (routeId === entity.route_id) {
         // delete setedFavourites[i];
-        setedFavourites.splice(i);
+        setedFavourites.splice(i, 1);
         break;
       }
       i += 1;
     }
-
+    console.log('setedFavourites', setedFavourites);
     // refresh favourites
     dispatch(set(setedFavourites));
 
