@@ -8,18 +8,26 @@ import pageWithIntl from '../src/components/PageWithIntl';
 import Layout from '../src/components/App/Layout';
 import Main from '../src/components/Index/Main';
 import { initStore } from '../src/redux/store';
-import * as uiActionCreators from '../src/redux/actions';
+import * as routesActionCreators from '../src/components/Index/redux/actions';
+
 
 /**
- * Componente contenedor de index
+ * Page component
  */
 class Index extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      /** request get routes error */
+      error: null,
+    };
+  }
+
   /**
-   * Carga inicial
-   * Se llama: al refrescar la páginas server-side
-   * Se llama: vía Link client-side
+   * Initial load, is called when:
+   * Refresh page (server-side)
+   * By Link React component (client-side)
    *
-   * @param props propiedades enviadas desde sus HOC
    * @return objeto a ser parte propiedades
    */
   static async getInitialProps() {
@@ -27,65 +35,81 @@ class Index extends React.Component {
   }
 
   /**
-   * Después de montar, despacha acciones
-   * Se llama: al refrescar la páginas client-side
-   * Se llama: vía Link client-side
+   * After mount
    */
   async componentDidMount() {
-    const { actions } = this.props;
-    actions.ui.closeMenu();
+    this.getRoutes();
+  }
+
+  /**
+   * Get routes from actions
+   */
+  async getRoutes() {
+    try {
+      const { actions } = this.props;
+      // si hay error deja null
+      if (this.state.error !== null) this.setState({ error: null });
+      // despachar obtener entidades
+      await actions.routes.get();
+    } catch (e) {
+      this.setState({ error: e.message });
+    }
   }
 
   render() {
     const {
-      ui,
-      actions,
+      routes,
     } = this.props;
+    const { error } = this.state;
 
     return (
       <Layout
-        title=""
+        title="Transit - Smart Mobility"
         place='index'
-        showMenu={ui.showMenu}
-        onClickShowMenu={actions.ui.showMenu}
-        onClickCloseMenu={actions.ui.closeMenu}
       >
-        <Main />
+        <Main
+          error={error}
+          routes={routes}
+        />
       </Layout>
     );
   }
 }
 
 Index.propTypes = {
-  /** estados globales de ui */
-  ui: PropTypes.object.isRequired,
-  /** acciones de redux */
+  /** routes element from global state */
+  routes: PropTypes.object.isRequired,
+  /** redux actions */
   actions: PropTypes.object.isRequired,
 };
 
 /**
- * Le pide al estado global sólo lo que necesita para este componente
+ * Take props from global state
+ *
+ * @param {object} state global state
  */
 const mapStateToProps = state => ({
-  ui: state.ui,
+  routes: state.routes,
 });
 
 /**
- * Transforma acciones externas a propiedades, para realizar el despacho más ágil
+ * Transform actions to props, to bring us an agile dispatch
+ *
+ * @param {object} dispatch dispatch of actions
  */
 const mapDispatchToProps = dispatch => ({
   actions: {
-    ui: bindActionCreators(uiActionCreators, dispatch),
+    routes: bindActionCreators(routesActionCreators, dispatch),
   },
 });
 
 /**
- * Conexión con el HOC Redux
+ * Conection with the Reduc HOC
  */
 const IndexRedux = withRedux(initStore, mapStateToProps, mapDispatchToProps)(Index);
 
 
 /**
- * Conexión con el HOC de React INTL
+ * Conection with the React INTL HOC
  */
 export default pageWithIntl(IndexRedux);

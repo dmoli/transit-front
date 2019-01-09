@@ -1,5 +1,6 @@
 {
   "page.title": "Título por defecto!",
   "tabs.routes": "Recorridos",
-  "tabs.favourites": "Favoritos"
+  "tabs.favourites": "Favoritos",
+  "routes.error": "Ups algo ha salido mal :("
 }

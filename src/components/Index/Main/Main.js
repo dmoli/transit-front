@@ -1,9 +1,8 @@
-/* eslint no-return-assign: [0] */
-/* eslint no-unused-vars: [0] */
-/* global API_URL */
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import fetch from 'isomorphic-fetch';
+import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
+import { PulseLoader } from 'react-spinners';
 
 import Map from '../../Elements/Map';
 import Tabs from '../Tabs';
@@ -20,109 +19,81 @@ class Main extends Component {
     this.state = {
       /* current tab name */
       currentTabName: 'routes',
-      /* list of routes */
-      routes: [],
-      /* list of favourites */
-      favourites: [],
+      /** error next page */
+      errorNextPage: null,
+      /** loading next page */
+      loadingNextPage: false,
     };
 
+    this.handleScroll = this.handleScroll.bind(this);
     this.handleTabName = this.handleTabName.bind(this);
-    this.handleFavourites = this.handleFavourites.bind(this);
   }
 
   /**
-   * Get routes
-   *
-   * @return array of routes
+   * After mount, listen scroll
    */
-  async componentDidMount() {
-    await this.handleRoutes();
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
   }
 
   /**
-   * Get routes
-   *
-   * @return array of routes
+   * Before mount, leave to listen scroll
    */
-  async handleRoutes() {
-    // get routes from API
-    const response = await this.getRoutes();
-    // transform to object a put in the state
-    const routes = await response.json();
-    this.setState({ routes: this.setRoute(routes) });
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
   }
 
   /**
-   * Get routes from API
-   *
-   * @return array of routes
+   * When there scroll this function is called
    */
-  async getRoutes() {
+  async handleScroll() {
     try {
-      const response = await fetch(`${API_URL}/transit/routes.json`, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          Accept: 'application/json',
-        },
-        method: 'get',
-      });
-      return response;
-    } catch (e) {
-      throw new Error(e.message);
-    }
-  }
-
-  /**
-   * Set routes
-   *
-   * @return array of routes seted
-   */
-  setRoute(routes) {
-    // get routes from API
-    const setedRoutes = routes;
-    setedRoutes.forEach((entity, i) => {
-      const entitySeted = entity;
-      entitySeted.isFav = false;
-      setedRoutes[i] = entitySeted;
-    });
-
-    return setedRoutes;
-  }
-
-  /**
-   * Get routes by id
-   *
-   * @param {int} routeId route id
-   * @param {array} routes list of routes
-   * @param {string} action name of action
-   * @return array of routes seted
-   */
-  setRouteById(routeId, routes, action) {
-    // get routes from API
-    const setedRoutes = routes;
-    let i = 0;
-    for (const entity of setedRoutes) {
-      if (routeId === entity.route_id) {
-        const entitySeted = entity;
-        // action to favorite
-        if (action === 'fav') entitySeted.isFav = true;
-        // action to unfavorite
-        if (action === 'unfav') entitySeted.isFav = false;
-        setedRoutes[i] = entitySeted;
-        break;
+      const { routes, error } = this.props;
+      const { loadingNextPage } = this.state;
+      // stop when init loading
+      if (routes.entities.length === 0 && error === null) {
+        return;
       }
-      i += 1;
-    }
-    return setedRoutes;
-  }
 
-  /**
-   * Handle tabs behavior
-   *
-  * @param {string} tabName tab name
-   */
-  handleTabName(tabName) {
-    this.setState({ currentTabName: tabName });
+      // stop if exist error
+      if (error !== null) {
+        return;
+      }
+
+      // stop if the next results has been called
+      if (loadingNextPage === true) return;
+
+      // get webpage objects
+      const body = document.body;
+      const html = document.documentElement;
+      // dinamic value of the scroll y
+      const scrolled = window.scrollY;
+      // fix value of the user visual
+      const viewportHeight = window.innerHeight;
+      // dinamic value of the height that is taken in the page
+      const fullHeight = Math.max(
+        body.scrollHeight,
+        body.offsetHeight,
+        html.clientHeight,
+        html.scrollHeight,
+        html.offsetHeight,
+      );
+      // dispatch the scroll when the scroll is in "x" px from the bottom
+      const triggerScroll = 200;
+      // when scrolled + viewportHeight is greater or equal to fullHeight, then dispatch the search
+      if (!(scrolled + viewportHeight + triggerScroll >= fullHeight)) {
+        return;
+      }
+
+      this.setState({ loadingNextPage: true });
+      // search next page datas
+      // await onNextPage();
+      console.log('onNextPage');
+      this.setState({ loadingNextPage: false });
+    } catch (e) {
+      // error
+      this.setState({ errorNextPage: e.message });
+    }
   }
 
   /**
@@ -148,40 +119,63 @@ class Main extends Component {
   }
 
   /**
-   * Get routes by id
+   * Handle tabs behavior
    *
-   * @param {int} routeId route id
-   * @param {array} favourites list of favourites
-   * @param {string} action name of action
-   * @return array of favourites seted
+  * @param {string} tabName tab name
    */
-  setFavourites(routeId, favourites, action) {
-    // get routes from API
-    // const setedFavourites = favourites;
-    // let i = 0;
-    // let exist = true;
-    // for (const entity of setedFavourites) {
-    //   if (routeId === entity.route_id) {
-    //     const entitySeted = entity;
-    //     // action to unfavorite
-    //     if (action === 'unfav') delete setedFavourites[i];
-    //     setedFavourites[i] = entitySeted;
-    //     break;
-    //   }
-    //   i += 1;
-    // }
-
-    // if (exist !=== false) {
-    //   // action to favorite
-    //   if (action === 'fav') setedFavourites.push(entity);
-    // }
-    // return setedFavourites;
+  handleTabName(tabName) {
+    this.setState({ currentTabName: tabName });
   }
 
+  /**
+   * Render loading
+   *
+   * @return component
+   */
+  renderLoading() {
+    return (
+      <ContainerLoading>
+        <PulseLoader
+          size={21}
+          color={'#41a2c7'}
+          loading={true}
+        />
+      </ContainerLoading>
+    );
+  }
+
+  /**
+   * Render error
+   *
+   * @return component
+   */
+  renderError() {
+    return (
+      <ContainerError>
+        <FormattedMessage
+          id='routes.error'
+          defaultMessage='Cargando...'>
+          {txt => (<ErrorName>{txt}</ErrorName>)}
+        </FormattedMessage>
+      </ContainerError>
+    );
+  }
 
   render() {
     const center = { lat: -33.4314474, lng: -70.6093325 };
-    const { currentTabName, routes, favourites } = this.state;
+    const { currentTabName } = this.state;
+    const { routes, error } = this.props;
+
+    // if not exist entities and not exit error, then is loading
+    if (routes.entities.length === 0 && error === null) {
+      return this.renderLoading();
+    }
+
+    // if exist error
+    if (error !== null) {
+      return this.renderError(error);
+    }
+
     return (
       <ContainerMain>
         <ContainerResults>
@@ -192,7 +186,7 @@ class Main extends Component {
           {
             currentTabName === 'routes' && (
               <RoutesList
-                items={routes}
+                items={routes.entities}
                 onClickToggleFavorite={this.handleFavourites}
               />
             )
@@ -200,7 +194,7 @@ class Main extends Component {
           {
             currentTabName === 'favourites' && (
               <FavouritesList
-                items={favourites}
+                items={[]}
                 onClickToggleFavorite={this.handleFavourites}
               />
             )
@@ -218,6 +212,22 @@ class Main extends Component {
   }
 }
 
+Main.defaultProps = {
+  error: null,
+};
+
+Main.propTypes = {
+  /** error */
+  error: PropTypes.string,
+  /** routes object */
+  routes: PropTypes.object.isRequired,
+  /** función unfavorite */
+  // onClickUnfavorite: PropTypes.func.isRequired,
+  // /** acción siguiente página */
+  // onNextPage: PropTypes.func.isRequired,
+};
+
+
 const ContainerMain = styled.section`
   display: flex;
   flex-direction: row;
@@ -228,6 +238,14 @@ const ContainerMain = styled.section`
   @media all and (max-width: 704px) {
     flex-direction: column;
   }
+`;
+
+const ContainerLoading = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px;
+  font-weight: bold;
 `;
 
 const ContainerMap = styled.section`
@@ -245,5 +263,15 @@ const ContainerResults = styled.section`
     order: 2;
   }
 `;
+
+const ContainerError = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100px 0px 30px 0px;
+  font-weight: bold;
+`;
+
+const ErrorName = styled.span``;
 
 export default Main;

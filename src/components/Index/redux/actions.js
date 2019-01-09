@@ -50,9 +50,9 @@ export const get = () => (
       // response to json
       const data = await response.json();
       // dispatch action
-      dispatch(set(data.favourites));
+      dispatch(set(data));
       // if not exist
-      if (data.favourites.length === 0) {
+      if (data.length === 0) {
         throw new Error('empty');
       }
 
