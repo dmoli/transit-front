@@ -9,7 +9,6 @@ import Tabs from '../Tabs';
 import RoutesList from '../RoutesList';
 import FavouritesList from '../FavouritesList';
 
-
 /**
  * Main component
  */
@@ -27,6 +26,7 @@ class Main extends Component {
 
     this.handleScroll = this.handleScroll.bind(this);
     this.handleTabName = this.handleTabName.bind(this);
+    this.handleFavourites = this.handleFavourites.bind(this);
   }
 
   /**
@@ -88,7 +88,6 @@ class Main extends Component {
       this.setState({ loadingNextPage: true });
       // search next page datas
       // await onNextPage();
-      console.log('onNextPage');
       this.setState({ loadingNextPage: false });
     } catch (e) {
       // error
@@ -104,18 +103,8 @@ class Main extends Component {
    * @return array of routes seted
    */
   handleFavourites(routeId, action) {
-    // create a deep copy of routes to keep immutability
-    const { routes } = JSON.parse(JSON.stringify(this.state));
-    // create a deep copy of routes to keep immutability
-    const { favourites } = JSON.parse(JSON.stringify(this.state));
-    // set favourite field and set state to refresh
-    this.setState({ routes: this.setRouteById(routeId, routes, action) });
-    // set favourites list
-    if (action === 'fav') {
-      this.setState({ favourites: this.setFavourites(routeId, favourites, 'add') });
-    } else {
-      this.setState({ favourites: this.setFavourites(routeId, favourites, 'remove') });
-    }
+    const { onClickToggleFavorite } = this.props;
+    onClickToggleFavorite(routeId, action);
   }
 
   /**
@@ -164,7 +153,7 @@ class Main extends Component {
   render() {
     const center = { lat: -33.4314474, lng: -70.6093325 };
     const { currentTabName } = this.state;
-    const { routes, error } = this.props;
+    const { routes, favourites, error } = this.props;
 
     // if not exist entities and not exit error, then is loading
     if (routes.entities.length === 0 && error === null) {
@@ -194,7 +183,7 @@ class Main extends Component {
           {
             currentTabName === 'favourites' && (
               <FavouritesList
-                items={[]}
+                items={favourites.entities}
                 onClickToggleFavorite={this.handleFavourites}
               />
             )
@@ -221,8 +210,10 @@ Main.propTypes = {
   error: PropTypes.string,
   /** routes object */
   routes: PropTypes.object.isRequired,
-  /** función unfavorite */
-  // onClickUnfavorite: PropTypes.func.isRequired,
+  /** favourites object */
+  favourites: PropTypes.object.isRequired,
+  /** function: Handle favourite actions */
+  onClickToggleFavorite: PropTypes.func.isRequired,
   // /** acción siguiente página */
   // onNextPage: PropTypes.func.isRequired,
 };

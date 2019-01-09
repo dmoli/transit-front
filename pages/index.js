@@ -9,7 +9,7 @@ import Layout from '../src/components/App/Layout';
 import Main from '../src/components/Index/Main';
 import { initStore } from '../src/redux/store';
 import * as routesActionCreators from '../src/components/Index/Route/redux/actions';
-
+import * as favouritesActionCreators from '../src/components/Index/Favourite/redux/actions';
 
 /**
  * Page component
@@ -21,6 +21,8 @@ class Index extends React.Component {
       /** request get routes error */
       error: null,
     };
+
+    this.handleFavourites = this.handleFavourites.bind(this);
   }
 
   /**
@@ -47,18 +49,31 @@ class Index extends React.Component {
   async getRoutes() {
     try {
       const { actions } = this.props;
-      // si hay error deja null
+      // if exist error, set state
       if (this.state.error !== null) this.setState({ error: null });
-      // despachar obtener entidades
+      // dispatch get routes
       await actions.routes.get();
     } catch (e) {
       this.setState({ error: e.message });
     }
   }
 
+  /**
+   * Handle favourite actions
+   *
+   * @param {int} routeId route id
+   * @param {string} action action name, fav or unfav
+   */
+  handleFavourites(routeId, action) {
+    const { actions } = this.props;
+    if (action === 'fav') actions.favourites.add(routeId);
+    if (action === 'unfav') actions.favourites.remove(routeId);
+  }
+
   render() {
     const {
       routes,
+      favourites,
     } = this.props;
     const { error } = this.state;
 
@@ -70,6 +85,8 @@ class Index extends React.Component {
         <Main
           error={error}
           routes={routes}
+          favourites={favourites}
+          onClickToggleFavorite={this.handleFavourites}
         />
       </Layout>
     );
@@ -79,6 +96,8 @@ class Index extends React.Component {
 Index.propTypes = {
   /** routes element from global state */
   routes: PropTypes.object.isRequired,
+  /** favourites element from global state */
+  favourites: PropTypes.object.isRequired,
   /** redux actions */
   actions: PropTypes.object.isRequired,
 };
@@ -90,6 +109,7 @@ Index.propTypes = {
  */
 const mapStateToProps = state => ({
   routes: state.routes,
+  favourites: state.favourites,
 });
 
 /**
@@ -100,6 +120,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   actions: {
     routes: bindActionCreators(routesActionCreators, dispatch),
+    favourites: bindActionCreators(favouritesActionCreators, dispatch),
   },
 });
 

@@ -19,7 +19,7 @@ class FavouritesList extends Component {
         {
           items.map(item => (
             <Route
-              key={item.id}
+              key={item.route_id}
               item={item}
               onClickToggleFavorite={onClickToggleFavorite}
             />

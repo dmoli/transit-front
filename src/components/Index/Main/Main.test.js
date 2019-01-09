@@ -26,6 +26,8 @@ describe('<Main />', () => {
         <Main
           error={null}
           routes={initState}
+          favourites={[]}
+          onClickToggleFavorite={() => {}}
         />
       </Provider>,
     );
@@ -38,6 +40,8 @@ describe('<Main />', () => {
         <Main
           error={'error'}
           routes={initState}
+          favourites={[]}
+          onClickToggleFavorite={() => {}}
         />
       </Provider>,
     );
@@ -50,6 +54,8 @@ describe('<Main />', () => {
         <Main
           error={null}
           routes={state}
+          favourites={[]}
+          onClickToggleFavorite={() => {}}
         />
       </Provider>,
     );

@@ -2,6 +2,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
+import { action } from '@storybook/addon-actions';
 import { Provider } from 'react-redux';
 
 import Main from './Main';
@@ -26,6 +27,8 @@ storiesOf('Index/Main', module)
       <Main
         error={null}
         routes={initState}
+        favourites={[]}
+        onClickToggleFavorite={action('onClickToggleFavorite')}
       />,
     ),
   )
@@ -34,6 +37,8 @@ storiesOf('Index/Main', module)
       <Main
         error={'error'}
         routes={initState}
+        favourites={[]}
+        onClickToggleFavorite={action('onClickToggleFavorite')}
       />,
     ),
   )
@@ -42,6 +47,8 @@ storiesOf('Index/Main', module)
       <Main
         error={null}
         routes={state}
+        favourites={[]}
+        onClickToggleFavorite={action('onClickToggleFavorite')}
       />,
     ),
   );

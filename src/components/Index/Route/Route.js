@@ -24,7 +24,7 @@ class Route extends Component {
 
   render() {
     const { item } = this.props;
-    console.log('item.isFav', item.isFav);
+    console.log('item', item)
     return (
       <ContainerRoute
         key={item.route_id}
@@ -34,17 +34,16 @@ class Route extends Component {
         <ContainerNames>
           <Number>{item.route_short_name}</Number>
           <Name>{item.route_long_name}</Name>
-          <Name>{item.route_long_name}</Name>
         </ContainerNames>
         <Favourite
-          onClick={() => this.handleFavourites(item.route_id, (item.isFav ? 'unfav' : 'fav'))}
+          onClick={() => this.handleFavourites(item.route_id, (item.favorited ? 'unfav' : 'fav'))}
         >
           {
-            item.isFav
+            item.favorited
           }
           <FaStar
             size={30}
-            className={item.isFav ? 'pointer-hover yellow' : 'pointer-hover white'}
+            className={item.favorited ? 'pointer-hover yellow' : 'pointer-hover white'}
           />
         </Favourite>
       </ContainerRoute>
