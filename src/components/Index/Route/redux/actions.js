@@ -1,4 +1,4 @@
-import * as api from '../../../api/routes';
+import * as api from '../../../../api/routes';
 
 /**
  * Action types

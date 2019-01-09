@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import initialState from '../../../redux/state';
+import initialState from '../../../../redux/state';
 import { actionTypes } from './actions';
 
 /**

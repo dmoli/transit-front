@@ -3,4 +3,5 @@ export default {
     entities: [],
     page: 1,
   },
+  favorites: [],
 };

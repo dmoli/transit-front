@@ -8,7 +8,7 @@ import pageWithIntl from '../src/components/PageWithIntl';
 import Layout from '../src/components/App/Layout';
 import Main from '../src/components/Index/Main';
 import { initStore } from '../src/redux/store';
-import * as routesActionCreators from '../src/components/Index/redux/actions';
+import * as routesActionCreators from '../src/components/Index/Route/redux/actions';
 
 
 /**
