@@ -2,6 +2,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
+import { action } from '@storybook/addon-actions';
 import { Provider } from 'react-redux';
 
 import Favourite from './Favourite';
@@ -16,6 +17,9 @@ storiesOf('Index/Favourite', module)
   .addDecorator(story => <Provider store={store}>{story()}</Provider>)
   .add('Favourite',
     withInfo('Favourite')(() =>
-      <Favourite item={route} />,
+      <Favourite
+        item={route}
+        onClickToggleFavorite={action('onClickToggleFavorite')}
+      />,
     ),
   );

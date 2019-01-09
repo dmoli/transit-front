@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import Route from '../Route';
+import Favourite from '../Favourite';
 
 /**
  * Favourites list
@@ -18,7 +18,7 @@ class FavouritesList extends Component {
       <ContainerFavouritesList>
         {
           items.map(item => (
-            <Route
+            <Favourite
               key={item.route_id}
               item={item}
               onClickToggleFavorite={onClickToggleFavorite}

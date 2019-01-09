@@ -15,7 +15,10 @@ describe('<Favourite />', () => {
   it('should rendered correctly', () => {
     const component = mountWithIntl(
       <Provider store={store}>
-        <Favourite item={route} />
+        <Favourite
+          item={route}
+          onClickToggleFavorite={() => {}}
+        />,
       </Provider>,
     );
     expect(component.html()).toMatchSnapshot();
