@@ -1,5 +1,6 @@
 export default {
-  ui: {
-    showMenu: false,
+  routes: {
+    entities: [],
+    page: 1,
   },
 };

@@ -22,6 +22,8 @@ class Main extends Component {
       currentTabName: 'routes',
       /* list of routes */
       routes: [],
+      /* list of favourites */
+      favourites: [],
     };
 
     this.handleTabName = this.handleTabName.bind(this);
@@ -71,7 +73,7 @@ class Main extends Component {
   }
 
   /**
-   * Get routes
+   * Set routes
    *
    * @return array of routes seted
    */
@@ -132,14 +134,54 @@ class Main extends Component {
    */
   handleFavourites(routeId, action) {
     // create a deep copy of routes to keep immutability
-    const routes = JSON.parse(JSON.stringify(this.state.routes));
+    const { routes } = JSON.parse(JSON.stringify(this.state));
+    // create a deep copy of routes to keep immutability
+    const { favourites } = JSON.parse(JSON.stringify(this.state));
     // set favourite field and set state to refresh
     this.setState({ routes: this.setRouteById(routeId, routes, action) });
+    // set favourites list
+    if (action === 'fav') {
+      this.setState({ favourites: this.setFavourites(routeId, favourites, 'add') });
+    } else {
+      this.setState({ favourites: this.setFavourites(routeId, favourites, 'remove') });
+    }
   }
+
+  /**
+   * Get routes by id
+   *
+   * @param {int} routeId route id
+   * @param {array} favourites list of favourites
+   * @param {string} action name of action
+   * @return array of favourites seted
+   */
+  setFavourites(routeId, favourites, action) {
+    // get routes from API
+    // const setedFavourites = favourites;
+    // let i = 0;
+    // let exist = true;
+    // for (const entity of setedFavourites) {
+    //   if (routeId === entity.route_id) {
+    //     const entitySeted = entity;
+    //     // action to unfavorite
+    //     if (action === 'unfav') delete setedFavourites[i];
+    //     setedFavourites[i] = entitySeted;
+    //     break;
+    //   }
+    //   i += 1;
+    // }
+
+    // if (exist !=== false) {
+    //   // action to favorite
+    //   if (action === 'fav') setedFavourites.push(entity);
+    // }
+    // return setedFavourites;
+  }
+
 
   render() {
     const center = { lat: -33.4314474, lng: -70.6093325 };
-    const { currentTabName, routes } = this.state;
+    const { currentTabName, routes, favourites } = this.state;
     return (
       <ContainerMain>
         <ContainerResults>
@@ -158,7 +200,7 @@ class Main extends Component {
           {
             currentTabName === 'favourites' && (
               <FavouritesList
-                items={[]}
+                items={favourites}
                 onClickToggleFavorite={this.handleFavourites}
               />
             )
