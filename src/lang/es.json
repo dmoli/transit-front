@@ -3,5 +3,5 @@
   "tabs.routes": "Recorridos",
   "tabs.favourites": "Favoritos",
   "routes.error": "Ups algo ha salido mal :(",
-  "routes.lablelRouteName": "Recorrido"
+  "routes.labelRouteName": "Recorrido"
 }

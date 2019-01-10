@@ -47,6 +47,11 @@ const ContainerHeader = styled.header`
   width: 100%;
   box-shadow: 0px 0px 0px #000;
   justify-content: space-between;
+  @media all and (max-width: 768px) {
+    position: fixed;
+    top: 0;
+    z-index: 1;
+  }
 `;
 
 const Logotipo = styled.figure`

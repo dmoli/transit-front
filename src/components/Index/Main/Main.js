@@ -168,7 +168,7 @@ class Main extends Component {
               {
                 routes.current !== null && (
                   <FormattedMessage
-                    id='routes.lablelRouteName'
+                    id='routes.labelRouteName'
                     defaultMessage='Recorrido'>
                     {txt => (<ErrorName>{`${txt} ${routes.current}`}</ErrorName>)}
                   </FormattedMessage>
@@ -235,7 +235,7 @@ const ContainerMain = styled.section`
   flex-direction: row;
   align-items: center;
   height: 100vh;
-  @media all and (max-width: 704px) {
+  @media all and (max-width: 768px) {
     flex-direction: column;
   }
 `;
@@ -251,8 +251,10 @@ const ContainerLoading = styled.section`
 const ContainerMap = styled.section`
   width: 50%;
   height: 100vh;
-  @media all and (max-width: 704px) {
+  @media all and (max-width: 768px) {
     order: 1;
+    width: 100%;
+    height: 50vh;
   }
 `;
 
@@ -261,8 +263,10 @@ const ContainerInfo = styled.section`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  @media all and (max-width: 704px) {
+  @media all and (max-width: 768px) {
     order: 2;
+    width: 100%;
+    height: 50vh;
   }
 `;
 
@@ -272,12 +276,20 @@ const ContainerOptions = styled.section`
   display: flex;
   flex-direction: column;
   flex-flow: wrap;
+  @media all and (max-width: 768px) {
+    height: 20vh;
+    max-height: 46px;
+  }
 `;
 
 const ContainerSearch = styled.section`
   width: 100%;
   background-color: #f00;
+  display: none;
   min-height: 40px;
+  @media all and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const CurrentName = styled.section`
@@ -287,11 +299,13 @@ const CurrentName = styled.section`
   flex-direction: column;
   justify-content: center;
   padding: 0 0 0 18px;
+  @media all and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const ContainerTabs = styled.section`
   width: 100%;
-  background-color: #f0f;
   display: flex;
   flex-flow: column-reverse;
 `;
