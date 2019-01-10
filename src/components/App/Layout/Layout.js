@@ -3,8 +3,6 @@ import Head from 'next/head';
 import { defineMessages, injectIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import Header from '../Header';
-
 const messages = defineMessages({
   title: {
     id: 'page.title',
@@ -53,7 +51,6 @@ export default injectIntl(({
       <meta name='theme-color' content='#ffffff' />
     </Head>
     <Main>
-      <Header />
       { children }
     </Main>
   </div>

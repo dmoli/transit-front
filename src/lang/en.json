@@ -2,5 +2,6 @@
   "page.title": "",
   "tabs.routes": "Routes",
   "tabs.favourites": "Favoritas",
-  "routes.error": "Ups sorry something not work :("
+  "routes.error": "Ups sorry something not work :(",
+  "routes.lablelRouteName": "Route"
 }

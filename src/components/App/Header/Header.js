@@ -39,14 +39,12 @@ class Header extends Component {
 
 const ContainerHeader = styled.header`
   text-transform: uppercase;
-  padding: 12px 15px;
+  padding: 1px 16px;
   width: auto;
   display: flex;
   flex-direction: row;
   align-items: center;
-  position: fixed;
   width: 100%;
-  z-index: 4;
   box-shadow: 0px 0px 0px #000;
   justify-content: space-between;
 `;

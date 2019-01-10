@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { PulseLoader } from 'react-spinners';
 
+import Header from '../../App/Header';
 import Map from '../../Elements/Map';
 import Tabs from '../Tabs';
 import RoutesList from '../RoutesList';
@@ -140,7 +141,13 @@ class Main extends Component {
   render() {
     const center = { lat: -33.4314474, lng: -70.6093325 };
     const { currentTabName } = this.state;
-    const { routes, favourites, error, onClickToggleFavorite, onClickCurrent } = this.props;
+    const {
+      routes,
+      favourites,
+      error,
+      onClickToggleFavorite,
+      onClickCurrent,
+    } = this.props;
 
     // if not exist entities and not exit error, then is loading
     if (routes.entities.length === 0 && error === null) {
@@ -156,6 +163,18 @@ class Main extends Component {
       <ContainerMain>
         <ContainerInfo>
           <ContainerOptions>
+            <Header />
+            <CurrentName>
+              {
+                routes.current !== null && (
+                  <FormattedMessage
+                    id='routes.lablelRouteName'
+                    defaultMessage='Recorrido'>
+                    {txt => (<ErrorName>{`${txt} ${routes.current}`}</ErrorName>)}
+                  </FormattedMessage>
+                )
+              }
+            </CurrentName>
             <ContainerSearch></ContainerSearch>
             <ContainerTabs>
               <Tabs
@@ -215,6 +234,7 @@ const ContainerMain = styled.section`
   display: flex;
   flex-direction: row;
   align-items: center;
+  height: 100vh;
   @media all and (max-width: 704px) {
     flex-direction: column;
   }
@@ -251,19 +271,29 @@ const ContainerOptions = styled.section`
   height: 30vh;
   display: flex;
   flex-direction: column;
+  flex-flow: wrap;
 `;
 
 const ContainerSearch = styled.section`
   width: 100%;
   background-color: #f00;
-  height: 50%;
-  flex-grow: 1;
+  min-height: 40px;
+`;
+
+const CurrentName = styled.section`
+  width: 100%;
+  min-height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 0 0 18px;
 `;
 
 const ContainerTabs = styled.section`
   width: 100%;
-  height: 30px;
   background-color: #f0f;
+  display: flex;
+  flex-flow: column-reverse;
 `;
 
 const ContainerResults = styled.section`
