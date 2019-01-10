@@ -18,6 +18,7 @@ describe('<Route />', () => {
         <Route
           item={route}
           onClickToggleFavorite={() => {}}
+          onClickCurrent={() => {}}
         />
       </Provider>,
     );

@@ -26,7 +26,6 @@ class Main extends Component {
 
     this.handleScroll = this.handleScroll.bind(this);
     this.handleTabName = this.handleTabName.bind(this);
-    this.handleFavourites = this.handleFavourites.bind(this);
   }
 
   /**
@@ -96,18 +95,6 @@ class Main extends Component {
   }
 
   /**
-   * Handle favourite actions
-   *
-   * @param {int} routeId route id
-   * @param {string} action action name, favourite or unfavourite
-   * @return array of routes seted
-   */
-  handleFavourites(routeId, action) {
-    const { onClickToggleFavorite } = this.props;
-    onClickToggleFavorite(routeId, action);
-  }
-
-  /**
    * Handle tabs behavior
    *
   * @param {string} tabName tab name
@@ -153,7 +140,7 @@ class Main extends Component {
   render() {
     const center = { lat: -33.4314474, lng: -70.6093325 };
     const { currentTabName } = this.state;
-    const { routes, favourites, error } = this.props;
+    const { routes, favourites, error, onClickToggleFavorite, onClickCurrent } = this.props;
 
     // if not exist entities and not exit error, then is loading
     if (routes.entities.length === 0 && error === null) {
@@ -180,13 +167,15 @@ class Main extends Component {
           <ContainerResults show={currentTabName === 'routes'}>
             <RoutesList
               items={routes.entities}
-              onClickToggleFavorite={this.handleFavourites}
+              onClickToggleFavorite={onClickToggleFavorite}
+              onClickCurrent={onClickCurrent}
             />
           </ContainerResults>
           <ContainerResults show={currentTabName === 'favourites'}>
             <FavouritesList
               items={favourites.entities}
-              onClickToggleFavorite={this.handleFavourites}
+              onClickToggleFavorite={onClickToggleFavorite}
+              onClickCurrent={onClickCurrent}
             />
           </ContainerResults>
         </ContainerInfo>
@@ -213,8 +202,10 @@ Main.propTypes = {
   routes: PropTypes.object.isRequired,
   /** favourites object */
   favourites: PropTypes.object.isRequired,
-  /** function: Handle favourite actions */
+  /** function - active/desactive a favourite */
   onClickToggleFavorite: PropTypes.func.isRequired,
+  /** function - active/desactive a current */
+  onClickCurrent: PropTypes.func.isRequired,
   // /** acción siguiente página */
   // onNextPage: PropTypes.func.isRequired,
 };

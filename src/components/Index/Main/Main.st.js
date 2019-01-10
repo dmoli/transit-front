@@ -29,6 +29,7 @@ storiesOf('Index/Main', module)
         routes={initState}
         favourites={[]}
         onClickToggleFavorite={action('onClickToggleFavorite')}
+        onClickCurrent={action('onClickCurrent')}
       />,
     ),
   )
@@ -39,6 +40,7 @@ storiesOf('Index/Main', module)
         routes={initState}
         favourites={[]}
         onClickToggleFavorite={action('onClickToggleFavorite')}
+        onClickCurrent={action('onClickCurrent')}
       />,
     ),
   )
@@ -49,6 +51,7 @@ storiesOf('Index/Main', module)
         routes={state}
         favourites={[]}
         onClickToggleFavorite={action('onClickToggleFavorite')}
+        onClickCurrent={action('onClickCurrent')}
       />,
     ),
   );

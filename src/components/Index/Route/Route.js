@@ -22,14 +22,29 @@ class Route extends Component {
     onClickToggleFavorite(routeId, action);
   }
 
+  /**
+   * Handle current behavior
+   *
+   * @param {int} routeId route id
+   * @param {string} routeName route name
+   * @param {bol} currentState current boolean field
+   */
+  handleCurrent(routeId, routeName, currentState) {
+    if (currentState === true) return;
+    const { onClickCurrent } = this.props;
+    onClickCurrent(routeId, routeName, 'current');
+  }
+
   render() {
     const { item } = this.props;
-    console.log('item', item)
+
     return (
       <ContainerRoute
         key={item.route_id}
         background={item.route_color}
         color={item.route_text_color}
+        current={item.current}
+        onClick={() => this.handleCurrent(item.route_id, item.route_short_name, item.current)}
       >
         <ContainerNames>
           <Number>{item.route_short_name}</Number>
@@ -54,8 +69,10 @@ class Route extends Component {
 Route.propTypes = {
   /* item a mostrar */
   item: PropTypes.object.isRequired,
-  /* function: Handle favourite actions */
+  /** function - active/desactive a favourite */
   onClickToggleFavorite: PropTypes.func.isRequired,
+  /** function - active/desactive a current */
+  onClickCurrent: PropTypes.func.isRequired,
 };
 
 const ContainerRoute = styled.section`
@@ -72,6 +89,10 @@ const ContainerRoute = styled.section`
   width: 60%;
   border-radius: 18px;
   box-shadow: 0px 0px 28px -6px #000;
+  ${props => props.current === true && `
+    background: #00f;
+    color: #fff;
+  `}
   /* &:hover {
     box-shadow: 0px 0px 11px 4px rgba(167, 166, 166, 0.42);
     cursor: pointer;

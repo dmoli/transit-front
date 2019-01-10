@@ -15,11 +15,23 @@ class Favourite extends Component {
    *
    * @param {int} routeId route id
    * @param {string} action action name, favourite or unfavourite
-   * @return array of routes seted
    */
   handleFavourites(routeId, action) {
     const { onClickToggleFavorite } = this.props;
     onClickToggleFavorite(routeId, action);
+  }
+
+  /**
+   * Handle current behavior
+   *
+   * @param {int} routeId route id
+   * @param {string} routeName route name
+   * @param {bol} currentState current boolean field
+   */
+  handleCurrent(routeId, routeName, currentState) {
+    if (currentState === true) return;
+    const { onClickCurrent } = this.props;
+    onClickCurrent(routeId, routeName, 'current');
   }
 
   render() {
@@ -30,6 +42,7 @@ class Favourite extends Component {
         key={item.route_id}
         background={item.route_color}
         color={item.route_text_color}
+        onClick={() => this.handleCurrent(item.route_id, item.route_short_name, item.current)}
       >
         <ContainerNames>
           <Number>{item.route_short_name}</Number>
@@ -54,8 +67,10 @@ class Favourite extends Component {
 Favourite.propTypes = {
   /* item to show */
   item: PropTypes.object.isRequired,
-  /* function: Handle favourite actions */
+  /** function - active/desactive a favourite */
   onClickToggleFavorite: PropTypes.func.isRequired,
+  /** function - active/desactive a current */
+  onClickCurrent: PropTypes.func.isRequired,
 };
 
 const ContainerFavourite = styled.section`

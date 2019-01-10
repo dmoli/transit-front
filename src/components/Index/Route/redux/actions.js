@@ -1,4 +1,5 @@
 import * as api from '../../../../api/routes';
+import { set as setFavourite } from '../../Favourite/redux/actions';
 
 /**
  * Action types
@@ -8,6 +9,8 @@ export const actionTypes = {
   SET_ROUTES: 'SET_ROUTES',
   /** Set .entities && .page */
   SET_NEXT_PAGE_ROUTES: 'SET_NEXT_PAGE_ROUTES',
+  /** Set .current */
+  SET_CURRENT: 'SET_CURRENT',
 };
 
 /**
@@ -31,6 +34,67 @@ export const setNextPage = entities => ({
   type: actionTypes.SET_NEXT_PAGE_ROUTES,
   payload: entities,
 });
+
+/**
+ * Modify current
+ *
+ * @param {string} currentName currentName
+ * @return action to dispatch
+ */
+export const setCurrent = currentName => ({
+  type: actionTypes.SET_CURRENT,
+  payload: currentName,
+});
+
+/**
+ * Set object fields of the array by actions
+ *
+ * @param {int} id id of the entity
+ * @param {array} entities entities
+ * @param {string} action action to do
+ * @return {array} setedEntities entities seted
+ */
+const setFields = (id, entities, action) => {
+  const setedEntities = JSON.parse(JSON.stringify(entities));
+  let i = 0;
+  if (action === 'current') {
+    for (const entity of setedEntities) {
+      const entitySeted = entity;
+      if (id === entity.route_id) {
+        entitySeted.current = true;
+      } else {
+        entitySeted.current = false;
+      }
+      setedEntities[i] = entitySeted;
+      i += 1;
+    }
+  }
+  return setedEntities;
+};
+
+/**
+ * Refresh current route
+ *
+ * @param {int} routeId route id
+ * @param {string} routeName route name
+ * @param {object} dispatch dispatch of actions
+ * @return action to dispatch
+ */
+export const refreshCurrent = (routeId, routeName) => (
+  async (dispatch, getState) => {
+    const state = getState();
+    // refresh routes
+    const routesSeted = setFields(routeId, state.routes.entities, 'current');
+    dispatch(set(routesSeted));
+
+    // refresh favourites
+    const favouritesSeted = setFields(routeId, state.favourites.entities, 'current');
+    dispatch(setFavourite(favouritesSeted));
+
+    // refresh current field
+    dispatch(setCurrent(routeName));
+  }
+);
 
 /**
  * Get entities - API

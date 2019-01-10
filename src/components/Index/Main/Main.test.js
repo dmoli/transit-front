@@ -28,6 +28,7 @@ describe('<Main />', () => {
           routes={initState}
           favourites={[]}
           onClickToggleFavorite={() => {}}
+          onClickCurrent={() => {}}
         />
       </Provider>,
     );
@@ -42,6 +43,7 @@ describe('<Main />', () => {
           routes={initState}
           favourites={[]}
           onClickToggleFavorite={() => {}}
+          onClickCurrent={() => {}}
         />
       </Provider>,
     );
@@ -56,6 +58,7 @@ describe('<Main />', () => {
           routes={state}
           favourites={[]}
           onClickToggleFavorite={() => {}}
+          onClickCurrent={() => {}}
         />
       </Provider>,
     );

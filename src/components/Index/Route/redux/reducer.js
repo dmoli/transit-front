@@ -37,10 +37,25 @@ const pageReducer = (state = initialState.routes.page, action = {}) => {
   }
 };
 
+/**
+ * Current name reducer
+ *
+ * @param {array} state current name
+ * @param action change name
+ */
+const currentReducer = (state = initialState.routes.current, action = {}) => {
+  switch (action.type) {
+    case actionTypes.SET_CURRENT:
+      return action.payload;
+    default:
+      return state;
+  }
+};
 
 const reducer = combineReducers({
   entities: entitiesReducer,
   page: pageReducer,
+  current: currentReducer,
 });
 
 export default reducer;

@@ -12,6 +12,7 @@ class RoutesList extends Component {
     const {
       items,
       onClickToggleFavorite,
+      onClickCurrent,
     } = this.props;
 
     return (
@@ -22,6 +23,7 @@ class RoutesList extends Component {
               key={item.route_id}
               item={item}
               onClickToggleFavorite={onClickToggleFavorite}
+              onClickCurrent={onClickCurrent}
             />
           ))
         }
@@ -35,6 +37,8 @@ RoutesList.propTypes = {
   items: PropTypes.array.isRequired,
   /** acción activa/desactiva un favorite */
   onClickToggleFavorite: PropTypes.func.isRequired,
+  /** function - active/desactive a current */
+  onClickCurrent: PropTypes.func.isRequired,
 };
 
 const ContainerRoutesList = styled.section`

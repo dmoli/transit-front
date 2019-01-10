@@ -23,6 +23,7 @@ class Index extends React.Component {
     };
 
     this.handleFavourites = this.handleFavourites.bind(this);
+    this.handleRoutes = this.handleRoutes.bind(this);
   }
 
   /**
@@ -70,6 +71,18 @@ class Index extends React.Component {
     if (action === 'unfav') actions.favourites.remove(routeId);
   }
 
+  /**
+   * Handle routes actions
+   *
+   * @param {int} routeId route id
+   * @param {string} routeName route name
+   * @param {string} action action name, fav or unfav
+   */
+  handleRoutes(routeId, routeName, action) {
+    const { actions } = this.props;
+    if (action === 'current') actions.routes.refreshCurrent(routeId, routeName);
+  }
+
   render() {
     const {
       routes,
@@ -87,6 +100,7 @@ class Index extends React.Component {
           routes={routes}
           favourites={favourites}
           onClickToggleFavorite={this.handleFavourites}
+          onClickCurrent={this.handleRoutes}
         />
       </Layout>
     );
