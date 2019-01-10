@@ -42,6 +42,7 @@ class Favourite extends Component {
         key={item.route_id}
         background={item.route_color}
         color={item.route_text_color}
+        current={item.current}
         onClick={() => this.handleCurrent(item.route_id, item.route_short_name, item.current)}
       >
         <ContainerNames>
@@ -87,6 +88,10 @@ const ContainerFavourite = styled.section`
   width: 60%;
   border-radius: 18px;
   box-shadow: 0px 0px 28px -6px #000;
+  ${props => props.current === true && `
+    background: #00f;
+    color: #fff;
+  `}
   /* &:hover {
     box-shadow: 0px 0px 11px 4px rgba(167, 166, 166, 0.42);
     cursor: pointer;
