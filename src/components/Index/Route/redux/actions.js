@@ -155,6 +155,41 @@ export const get = (text = '') => (
 );
 
 /**
+ * Get next page of entities - API
+ *
+ * @param {string} text text to search
+ * @param {object} dispatch dispatch of actions
+ * @return action to dispatch
+ */
+export const getNextPage = (text = '') => (
+  async (dispatch, getState) => {
+    try {
+      const state = getState();
+      // get response - API
+      const response = await api.get(state.routes.page + 1, text);
+      if (response.status !== 200) {
+        throw new Error('error');
+      }
+
+      // response to json
+      const data = await response.json();
+      // if not exist
+      if (data.length === 0) {
+        throw new Error('empty');
+      }
+
+      // dispatch action
+      dispatch(setNextPage(data));
+
+      return data;
+    } catch (e) {
+      // error
+      throw new Error(e.message);
+    }
+  }
+);
+
+/**
  * Get shapes - API
  *
  * @param {object} dispatch dispatch of actions

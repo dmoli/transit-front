@@ -28,6 +28,7 @@ class Index extends React.Component {
 
     this.handleFavourites = this.handleFavourites.bind(this);
     this.handleRoutes = this.handleRoutes.bind(this);
+    this.handleNextPage = this.handleNextPage.bind(this);
   }
 
   /**
@@ -58,6 +59,21 @@ class Index extends React.Component {
       if (this.state.error !== null) this.setState({ error: null });
       // dispatch get routes
       await actions.routes.get();
+    } catch (e) {
+      this.setState({ error: e.message });
+    }
+  }
+
+  /**
+   * Get routes from actions
+   */
+  async handleNextPage() {
+    try {
+      const { actions } = this.props;
+      // if exist error, set state
+      if (this.state.error !== null) this.setState({ error: null });
+      // dispatch get routes
+      await actions.routes.getNextPage();
     } catch (e) {
       this.setState({ error: e.message });
     }
@@ -125,6 +141,7 @@ class Index extends React.Component {
           favourites={favourites}
           onClickToggleFavorite={this.handleFavourites}
           onClickCurrent={this.handleRoutes}
+          onNextPage={this.handleNextPage}
         />
       </Layout>
     );
