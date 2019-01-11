@@ -11,11 +11,12 @@ const headers = () => ({
  * Get entities
  *
  * @param {int} page pagination
+ * @param {string} text text to search
  * @return server response
  */
-export const get = async (page = 1) => {
+export const get = async (page = 1, text) => {
   try {
-    const response = await fetch(`${API_URL}/route/search`, {
+    const response = await fetch(`${API_URL}/route/search/?page=${page}&text=${text}`, {
       headers: headers(),
       method: 'get',
     });
