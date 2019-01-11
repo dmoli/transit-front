@@ -3,5 +3,6 @@
   "tabs.routes": "Routes",
   "tabs.favourites": "Favoritas",
   "routes.error": "Ups sorry something not work :(",
-  "routes.labelRouteName": "Route"
+  "routes.labelRouteName": "Route",
+  "shape.error": "Ups sorry something not work :("
 }

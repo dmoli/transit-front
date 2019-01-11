@@ -25,6 +25,8 @@ describe('<Main />', () => {
       <Provider store={store}>
         <Main
           error={null}
+          errorShape={null}
+          loadShape={false}
           routes={initState}
           favourites={[]}
           onClickToggleFavorite={() => {}}
@@ -40,6 +42,8 @@ describe('<Main />', () => {
       <Provider store={store}>
         <Main
           error={'error'}
+          errorShape={null}
+          loadShape={false}
           routes={initState}
           favourites={[]}
           onClickToggleFavorite={() => {}}
@@ -55,6 +59,8 @@ describe('<Main />', () => {
       <Provider store={store}>
         <Main
           error={null}
+          errorShape={null}
+          loadShape={false}
           routes={state}
           favourites={[]}
           onClickToggleFavorite={() => {}}

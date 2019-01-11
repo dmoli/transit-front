@@ -20,6 +20,10 @@ class Index extends React.Component {
     this.state = {
       /** request get routes error */
       error: null,
+      /** request get shape error */
+      errorShape: null,
+      /** load state from get shape */
+      loadShape: false,
     };
 
     this.handleFavourites = this.handleFavourites.bind(this);
@@ -78,11 +82,22 @@ class Index extends React.Component {
    * @param {string} routeName route name
    * @param {string} action action name, fav or unfav
    */
-  handleRoutes(routeId, routeName, action) {
+  async handleRoutes(routeId, routeName, action) {
     const { actions } = this.props;
     if (action === 'current') {
+      // refresh current in routes and favourites list
       actions.routes.refreshCurrent(routeId, routeName);
-      actions.routes.getShapes(routeId);
+      try {
+        this.setState({
+          errorShape: null,
+          loadShape: true,
+        });
+        // get shape by route
+        await actions.routes.getShapes(routeId);
+      } catch (e) {
+        this.setState({ errorShape: e.message });
+      }
+      this.setState({ loadShape: false });
     }
   }
 
@@ -91,7 +106,11 @@ class Index extends React.Component {
       routes,
       favourites,
     } = this.props;
-    const { error } = this.state;
+    const {
+      error,
+      errorShape,
+      loadShape,
+    } = this.state;
 
     return (
       <Layout
@@ -100,6 +119,8 @@ class Index extends React.Component {
       >
         <Main
           error={error}
+          errorShape={errorShape}
+          loadShape={loadShape}
           routes={routes}
           favourites={favourites}
           onClickToggleFavorite={this.handleFavourites}

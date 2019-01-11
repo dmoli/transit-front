@@ -3,5 +3,6 @@
   "tabs.routes": "Recorridos",
   "tabs.favourites": "Favoritos",
   "routes.error": "Ups algo ha salido mal :(",
-  "routes.labelRouteName": "Recorrido"
+  "routes.labelRouteName": "Recorrido",
+  "shape.error": "No pudimos cargar el recorrido, intenta otra vez :/"
 }

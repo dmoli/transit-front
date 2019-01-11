@@ -138,6 +138,55 @@ class Main extends Component {
     );
   }
 
+  // /**
+  //  * Render map load
+  //  *
+  //  * @return component
+  //  */
+  // renderMapLoading() {
+  //   return (
+  //     <MapLoading>
+  //       <Masker className='animated-background'>
+  //         <MaskerHeaderTop className='background-masker' />
+  //         <MaskerHeaderBottom className='background-masker' />
+  //       </Masker>
+  //     </MapLoading>
+  //   );
+  // }
+
+  /**
+   * Render map load
+   *
+   * @return component
+   */
+  renderMapLoading() {
+    return (
+      <MapLoading>
+        <PulseLoader
+          size={21}
+          color={'#fff'}
+          loading={true}
+        />
+      </MapLoading>
+    );
+  }
+  /**
+   * Render map error
+   *
+   * @return component
+   */
+  renderMapError() {
+    return (
+      <MapLoading>
+        <FormattedMessage
+          id='shape.error'
+          defaultMessage='No pudimos cargar el recorrido, intenta otra vez :/'>
+          {txt => (<ErrorShapeName>{txt}</ErrorShapeName>)}
+        </FormattedMessage>
+      </MapLoading>
+    );
+  }
+
   render() {
     const center = { lat: -33.4314474, lng: -70.6093325 };
     const { currentTabName } = this.state;
@@ -145,6 +194,8 @@ class Main extends Component {
       routes,
       favourites,
       error,
+      loadShape,
+      errorShape,
       onClickToggleFavorite,
       onClickCurrent,
     } = this.props;
@@ -199,6 +250,8 @@ class Main extends Component {
           </ContainerResults>
         </ContainerInfo>
         <ContainerMap>
+          { loadShape === true && (this.renderMapLoading()) }
+          { errorShape === 'empty' && (this.renderMapError()) }
           <Map
             center={center}
             markers={routes.shapes}
@@ -217,6 +270,10 @@ Main.defaultProps = {
 Main.propTypes = {
   /** error */
   error: PropTypes.string,
+  /** error get shape */
+  errorShape: PropTypes.string,
+  /** load get shape */
+  loadShape: PropTypes.string,
   /** routes object */
   routes: PropTypes.object.isRequired,
   /** favourites object */
@@ -332,5 +389,37 @@ const ContainerError = styled.section`
 `;
 
 const ErrorName = styled.span``;
+const ErrorShapeName = styled.span`color: white`;
+
+const MapLoading = styled.section`
+  width: 50%;
+  background: #3ba0c8bf;
+  height: 100vh;
+  position: fixed;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media all and (max-width: 768px) {
+    width: 100%;
+    height: 50vh;
+  }
+`;
+
+// const Masker = styled.div``;
+//
+// const MaskerHeaderTop = styled.div`
+//   top: 30px;
+//   left: 0;
+//   right: 0;
+//   height: 13px;
+// `;
+//
+// const MaskerHeaderBottom = styled.div`
+//   top: 217px;
+//   left: 0;
+//   right: 0;
+//   height: 13px;
+// `;
 
 export default Main;

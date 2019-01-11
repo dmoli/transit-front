@@ -26,6 +26,8 @@ storiesOf('Index/Main', module)
     withInfo('Main - loading')(() =>
       <Main
         error={null}
+        errorShape={null}
+        loadShape={false}
         routes={initState}
         favourites={[]}
         onClickToggleFavorite={action('onClickToggleFavorite')}
@@ -37,6 +39,8 @@ storiesOf('Index/Main', module)
     withInfo('Main - error')(() =>
       <Main
         error={'error'}
+        errorShape={null}
+        loadShape={false}
         routes={initState}
         favourites={[]}
         onClickToggleFavorite={action('onClickToggleFavorite')}
@@ -48,6 +52,21 @@ storiesOf('Index/Main', module)
     withInfo('Main - success')(() =>
       <Main
         error={null}
+        errorShape={null}
+        loadShape={false}
+        routes={state}
+        favourites={[]}
+        onClickToggleFavorite={action('onClickToggleFavorite')}
+        onClickCurrent={action('onClickCurrent')}
+      />,
+    ),
+  )
+  .add('Main - loading shape',
+    withInfo('Main - loading shape')(() =>
+      <Main
+        error={null}
+        errorShape={null}
+        loadShape={false}
         routes={state}
         favourites={[]}
         onClickToggleFavorite={action('onClickToggleFavorite')}
