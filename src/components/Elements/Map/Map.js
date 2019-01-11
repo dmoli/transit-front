@@ -53,7 +53,7 @@ const MapWithControlledZoom = compose(
     {props.markers.map((marker, index) => (
       <Marker
         key={index}
-        position={{ lat: marker.lat, lng: marker.lng }}
+        position={{ lat: parseFloat(marker.shape_pt_lat), lng: parseFloat(marker.shape_pt_lon) }}
         icon={
           new google.maps.MarkerImage(
           '/static/marker.svg',

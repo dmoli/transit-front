@@ -201,7 +201,7 @@ class Main extends Component {
         <ContainerMap>
           <Map
             center={center}
-            markers={[]}
+            markers={routes.shapes}
             zoomCustom={10}
           />
         </ContainerMap>
