@@ -5,7 +5,7 @@ import {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
-  Marker,
+  Polyline,
 } from 'react-google-maps';
 
 // Google Maps v3 API Options Reference:
@@ -50,24 +50,15 @@ const MapWithControlledZoom = compose(
     onZoomChanged={props.onZoomChanged}
     defaultOptions={defaultOptions}
   >
-    {props.markers.map((marker, index) => (
-      <Marker
-        key={index}
-        position={{ lat: parseFloat(marker.shape_pt_lat), lng: parseFloat(marker.shape_pt_lon) }}
-        icon={
-          new google.maps.MarkerImage(
-          '/static/marker.svg',
-          null,
-          null,
-          null,
-          new google.maps.Size(20.2, 23.8),
-        )
-        }
-        title={(index + 1).toString()}
-        zIndex={99999999}
-        // onClick={() => props.onMapClick(index)}
-      />
-    ))}
+    <Polyline
+      path={props.markers}
+      options={{
+        geodesic: true,
+        strokeColor: '#FF0000',
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+      }}
+    ></Polyline>
   </GoogleMap>,
 );
 

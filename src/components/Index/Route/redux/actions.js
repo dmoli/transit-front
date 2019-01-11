@@ -82,6 +82,17 @@ const setFields = (id, entities, action) => {
       i += 1;
     }
   }
+
+  i = 0;
+  if (action === 'init_shape') {
+    for (const entity of setedEntities) {
+      const entitySeted = entity;
+      entitySeted.lat = parseFloat(entitySeted.shape_pt_lat);
+      entitySeted.lng = parseFloat(entitySeted.shape_pt_lon);
+      setedEntities[i] = entitySeted;
+      i += 1;
+    }
+  }
   return setedEntities;
 };
 
@@ -158,12 +169,15 @@ export const getShapes = routeId => (
 
       // response to json
       const data = await response.json();
-      // dispatch action
-      dispatch(setShapes(data));
       // if not exist
       if (data.length === 0) {
         throw new Error('empty');
       }
+
+      // set init
+      const dataSeted = setFields(null, data, 'init_shape');
+      // dispatch action
+      dispatch(setShapes(dataSeted));
 
       return data;
     } catch (e) {
