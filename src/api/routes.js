@@ -15,7 +15,7 @@ const headers = () => ({
  */
 export const get = async (page = 1) => {
   try {
-    const response = await fetch(`${API_URL}/transit/routes.json`, {
+    const response = await fetch(`${API_URL}/route/search`, {
       headers: headers(),
       method: 'get',
     });
@@ -25,6 +25,20 @@ export const get = async (page = 1) => {
   }
 };
 
-export const getByName = async (name = '') => {
-
+/**
+ * Get shapes
+ *
+ * @param {int} routeId route id
+ * @return server response
+ */
+export const getShapes = async (routeId) => {
+  try {
+    const response = await fetch(`${API_URL}/route/shapes/${routeId}`, {
+      headers: headers(),
+      method: 'get',
+    });
+    return response;
+  } catch (e) {
+    throw new Error(e.message);
+  }
 };

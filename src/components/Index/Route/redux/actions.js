@@ -11,6 +11,8 @@ export const actionTypes = {
   SET_NEXT_PAGE_ROUTES: 'SET_NEXT_PAGE_ROUTES',
   /** Set .current */
   SET_CURRENT: 'SET_CURRENT',
+  /** Set .shapes */
+  SET_SHAPES: 'SET_SHAPES',
 };
 
 /**
@@ -44,6 +46,17 @@ export const setNextPage = entities => ({
 export const setCurrent = currentName => ({
   type: actionTypes.SET_CURRENT,
   payload: currentName,
+});
+
+/**
+ * Modify shapes
+ *
+ * @param {array} shapes shapes
+ * @return action to dispatch
+ */
+export const setShapes = shapes => ({
+  type: actionTypes.SET_SHAPES,
+  payload: shapes,
 });
 
 /**
@@ -115,6 +128,38 @@ export const get = () => (
       const data = await response.json();
       // dispatch action
       dispatch(set(data));
+      // if not exist
+      if (data.length === 0) {
+        throw new Error('empty');
+      }
+
+      return data;
+    } catch (e) {
+      // error
+      throw new Error(e.message);
+    }
+  }
+);
+
+/**
+ * Get shapes - API
+ *
+ * @param {object} dispatch dispatch of actions
+ * @return action to dispatch
+ */
+export const getShapes = routeId => (
+  async (dispatch) => {
+    try {
+      // get response - API
+      const response = await api.getShapes(routeId);
+      if (response.status !== 200) {
+        throw new Error('error');
+      }
+
+      // response to json
+      const data = await response.json();
+      // dispatch action
+      dispatch(setShapes(data));
       // if not exist
       if (data.length === 0) {
         throw new Error('empty');

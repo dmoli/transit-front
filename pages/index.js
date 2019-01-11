@@ -80,7 +80,10 @@ class Index extends React.Component {
    */
   handleRoutes(routeId, routeName, action) {
     const { actions } = this.props;
-    if (action === 'current') actions.routes.refreshCurrent(routeId, routeName);
+    if (action === 'current') {
+      actions.routes.refreshCurrent(routeId, routeName);
+      actions.routes.getShapes(routeId);
+    }
   }
 
   render() {

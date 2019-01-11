@@ -52,10 +52,27 @@ const currentReducer = (state = initialState.routes.current, action = {}) => {
   }
 };
 
+/**
+ * Shapes reducer
+ *
+ * @param {array} state list of shapes
+ * @param action action to do
+ */
+const shapesReducer = (state = initialState.routes.shapes, action = {}) => {
+  switch (action.type) {
+    case actionTypes.SET_SHAPES:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+
 const reducer = combineReducers({
   entities: entitiesReducer,
   page: pageReducer,
   current: currentReducer,
+  shapes: shapesReducer,
 });
 
 export default reducer;
