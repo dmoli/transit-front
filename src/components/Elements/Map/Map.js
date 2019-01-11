@@ -1,4 +1,4 @@
-/* global google */
+/* global GOOGLE_MAPS_ID */
 import { compose, withProps, withState, withHandlers } from 'recompose';
 import React, { Component } from 'react';
 import {
@@ -20,7 +20,7 @@ const defaultOptions = {
 
 const MapWithControlledZoom = compose(
   withProps({
-    googleMapURL: 'https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyBHuWJr1YBzsCg5Mc7sTzU8gSXNh_-VDcs',
+    googleMapURL: `https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${GOOGLE_MAPS_ID}`,
     loadingElement: <div style={{ height: '100%' }} />,
     containerElement: <div style={{ height: '100%' }} />,
     mapElement: <div style={{ height: '100%' }} />,
