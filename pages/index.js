@@ -68,15 +68,9 @@ class Index extends React.Component {
    * Get routes from actions
    */
   async handleNextPage() {
-    try {
-      const { actions } = this.props;
-      // if exist error, set state
-      if (this.state.error !== null) this.setState({ error: null });
-      // dispatch get routes
-      await actions.routes.getNextPage();
-    } catch (e) {
-      this.setState({ error: e.message });
-    }
+    const { actions } = this.props;
+    // dispatch get next page routes
+    await actions.routes.getNextPage();
   }
 
   /**

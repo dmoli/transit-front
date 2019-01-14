@@ -31,6 +31,7 @@ describe('<Main />', () => {
           favourites={[]}
           onClickToggleFavorite={() => {}}
           onClickCurrent={() => {}}
+          onNextPage={() => {}}
         />
       </Provider>,
     );
@@ -48,6 +49,7 @@ describe('<Main />', () => {
           favourites={[]}
           onClickToggleFavorite={() => {}}
           onClickCurrent={() => {}}
+          onNextPage={() => {}}
         />
       </Provider>,
     );
@@ -65,6 +67,7 @@ describe('<Main />', () => {
           favourites={[]}
           onClickToggleFavorite={() => {}}
           onClickCurrent={() => {}}
+          onNextPage={() => {}}
         />
       </Provider>,
     );

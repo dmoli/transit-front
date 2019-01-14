@@ -32,6 +32,7 @@ storiesOf('Index/Main', module)
         favourites={[]}
         onClickToggleFavorite={action('onClickToggleFavorite')}
         onClickCurrent={action('onClickCurrent')}
+        onNextPage={action('onNextPage')}
       />,
     ),
   )
@@ -45,6 +46,7 @@ storiesOf('Index/Main', module)
         favourites={[]}
         onClickToggleFavorite={action('onClickToggleFavorite')}
         onClickCurrent={action('onClickCurrent')}
+        onNextPage={action('onNextPage')}
       />,
     ),
   )
@@ -58,6 +60,7 @@ storiesOf('Index/Main', module)
         favourites={[]}
         onClickToggleFavorite={action('onClickToggleFavorite')}
         onClickCurrent={action('onClickCurrent')}
+        onNextPage={action('onNextPage')}
       />,
     ),
   )
@@ -71,6 +74,7 @@ storiesOf('Index/Main', module)
         favourites={[]}
         onClickToggleFavorite={action('onClickToggleFavorite')}
         onClickCurrent={action('onClickCurrent')}
+        onNextPage={action('onNextPage')}
       />,
     ),
   );

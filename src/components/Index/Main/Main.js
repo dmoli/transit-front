@@ -22,7 +22,7 @@ class Main extends Component {
       /** error next page */
       errorNextPage: null,
       /** loading next page */
-      loadingNextPage: false,
+      loadNextPage: false,
     };
 
     this.handleScroll = this.handleScroll.bind(this);
@@ -48,8 +48,11 @@ class Main extends Component {
    */
   async handleScroll() {
     try {
-      const { routes, error } = this.props;
-      const { loadingNextPage } = this.state;
+      const { routes, error, onNextPage } = this.props;
+      const { currentTabName, loadNextPage } = this.state;
+      // stop if the next results has been called
+      if (currentTabName === 'favourites') return;
+
       // stop when init loading
       if (routes.entities.length === 0 && error === null) {
         return;
@@ -61,7 +64,7 @@ class Main extends Component {
       }
 
       // stop if the next results has been called
-      if (loadingNextPage === true) return;
+      if (loadNextPage === true) return;
 
       // get webpage objects
       const body = document.body;
@@ -85,10 +88,10 @@ class Main extends Component {
         return;
       }
 
-      this.setState({ loadingNextPage: true });
+      this.setState({ loadNextPage: true });
       // search next page datas
-      // await onNextPage();
-      this.setState({ loadingNextPage: false });
+      await onNextPage();
+      this.setState({ loadNextPage: false });
     } catch (e) {
       // error
       this.setState({ errorNextPage: e.message });
@@ -143,31 +146,48 @@ class Main extends Component {
   //  *
   //  * @return component
   //  */
-  // renderMapLoading() {
+  // renderMapLoad() {
   //   return (
-  //     <MapLoading>
+  //     <MapLoad>
   //       <Masker className='animated-background'>
   //         <MaskerHeaderTop className='background-masker' />
   //         <MaskerHeaderBottom className='background-masker' />
   //       </Masker>
-  //     </MapLoading>
+  //     </MapLoad>
   //   );
   // }
+
+  /**
+   * Render next page load
+   *
+   * @return component
+   */
+  renderNextPageLoad() {
+    return (
+      <NextPageLoad>
+        <PulseLoader
+          size={21}
+          color={'#4ae16e'}
+          loading={true}
+        />
+      </NextPageLoad>
+    );
+  }
 
   /**
    * Render map load
    *
    * @return component
    */
-  renderMapLoading() {
+  renderMapLoad() {
     return (
-      <MapLoading>
+      <MapLoad>
         <PulseLoader
           size={21}
           color={'#fff'}
           loading={true}
         />
-      </MapLoading>
+      </MapLoad>
     );
   }
   /**
@@ -177,19 +197,19 @@ class Main extends Component {
    */
   renderMapError() {
     return (
-      <MapLoading>
+      <MapLoad>
         <FormattedMessage
           id='shape.error'
           defaultMessage='No pudimos cargar el recorrido, intenta otra vez :/'>
           {txt => (<ErrorShapeName>{txt}</ErrorShapeName>)}
         </FormattedMessage>
-      </MapLoading>
+      </MapLoad>
     );
   }
 
   render() {
     const center = { lat: -33.4314474, lng: -70.6093325 };
-    const { currentTabName } = this.state;
+    const { currentTabName, loadNextPage } = this.state;
     const {
       routes,
       favourites,
@@ -248,9 +268,10 @@ class Main extends Component {
               onClickCurrent={onClickCurrent}
             />
           </ContainerResults>
+          { loadNextPage === true && (this.renderNextPageLoad()) }
         </ContainerInfo>
         <ContainerMap>
-          { loadShape === true && (this.renderMapLoading()) }
+          { loadShape === true && (this.renderMapLoad()) }
           { errorShape === 'empty' && (this.renderMapError()) }
           <Map
             center={center}
@@ -282,8 +303,8 @@ Main.propTypes = {
   onClickToggleFavorite: PropTypes.func.isRequired,
   /** function - active/desactive a current */
   onClickCurrent: PropTypes.func.isRequired,
-  // /** acción siguiente página */
-  // onNextPage: PropTypes.func.isRequired,
+  /** acción siguiente página */
+  onNextPage: PropTypes.func.isRequired,
 };
 
 
@@ -308,6 +329,8 @@ const ContainerLoading = styled.section`
 const ContainerMap = styled.section`
   width: 50%;
   height: 100vh;
+  position: fixed;
+  right: 0;
   @media all and (max-width: 768px) {
     order: 1;
     width: 100%;
@@ -324,18 +347,17 @@ const ContainerInfo = styled.section`
     order: 2;
     width: 100%;
     height: 50vh;
+    margin-top: 50vh;
   }
 `;
 
 const ContainerOptions = styled.section`
-  width: 100%;
-  height: 30vh;
-  display: flex;
-  flex-direction: column;
-  flex-flow: wrap;
+  position: fixed;
+  width: 50%;
+  background: #ccc;
+  z-index: 1;
   @media all and (max-width: 768px) {
-    height: 20vh;
-    max-height: 46px;
+    width: 100%;
   }
 `;
 
@@ -369,15 +391,19 @@ const ContainerTabs = styled.section`
 
 const ContainerResults = styled.section`
   width: 100%;
-  height: 70vh;
+  /* height: 70vh;
   overflow-y: scroll;
-  max-height: 100%;
+  max-height: 100%; */
+  padding: 150px 0 0 0;
   ${props => props.show === true && `
     display: block;
   `}
   ${props => props.show === false && `
     display: none;
   `}
+  @media all and (max-width: 768px) {
+    padding: 50px 0 0 0;
+  }
 `;
 
 const ContainerError = styled.section`
@@ -391,7 +417,7 @@ const ContainerError = styled.section`
 const ErrorName = styled.span``;
 const ErrorShapeName = styled.span`color: white`;
 
-const MapLoading = styled.section`
+const MapLoad = styled.section`
   width: 50%;
   background: #3ba0c8bf;
   height: 100vh;
@@ -404,6 +430,14 @@ const MapLoading = styled.section`
     width: 100%;
     height: 50vh;
   }
+`;
+
+const NextPageLoad = styled.section`
+  width: 100%;
+  padding: 40px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 // const Masker = styled.div``;

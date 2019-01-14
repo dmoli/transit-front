@@ -47,7 +47,6 @@ const ContainerRoutesList = styled.section`
   flex-direction: column;
   position: relative;
   align-items: center;
-  padding: 30px 0 13px 0;
 `;
 
 export default RoutesList;
