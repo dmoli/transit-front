@@ -224,7 +224,7 @@ class Main extends Component {
     return (
       <ContainerSearchError>
         <FormattedMessage
-          id='route.errorSearch'
+          id='routes.errorSearch'
           defaultMessage='No encontramos coincidencia...'>
           {txt => (<ErrorSearchError>{txt}</ErrorSearchError>)}
         </FormattedMessage>
@@ -292,7 +292,7 @@ class Main extends Component {
     return (
       <ContainerSearchError>
         <FormattedMessage
-          id='route.errorNextPage'
+          id='routes.errorNextPage'
           defaultMessage='No hay más resultados...'>
           {txt => (<ErrorSearchError>{txt}</ErrorSearchError>)}
         </FormattedMessage>
