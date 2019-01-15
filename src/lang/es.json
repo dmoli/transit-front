@@ -4,5 +4,7 @@
   "tabs.favourites": "Favoritos",
   "routes.error": "Ups algo ha salido mal :(",
   "routes.labelRouteName": "Recorrido",
+  "routes.errorSearch": "No encontramos recorridos...",
+  "routes.errorNextPage": "No hay más resultados...",
   "shape.error": "No pudimos cargar el recorrido, intenta otra vez :/"
 }

@@ -23,10 +23,15 @@ class Main extends Component {
       errorNextPage: null,
       /** loading next page */
       loadNextPage: false,
+      /** input value */
+      value: '',
     };
 
+    this.renderTabs = this.renderTabs.bind(this);
+    this.renderSearch = this.renderSearch.bind(this);
     this.handleScroll = this.handleScroll.bind(this);
     this.handleTabName = this.handleTabName.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   /**
@@ -49,7 +54,7 @@ class Main extends Component {
   async handleScroll() {
     try {
       const { routes, error, onNextPage } = this.props;
-      const { currentTabName, loadNextPage } = this.state;
+      const { value, currentTabName, loadNextPage } = this.state;
       // stop if the next results has been called
       if (currentTabName === 'favourites') return;
 
@@ -88,9 +93,12 @@ class Main extends Component {
         return;
       }
 
-      this.setState({ loadNextPage: true });
+      this.setState({
+        errorNextPage: null,
+        loadNextPage: true,
+      });
       // search next page datas
-      await onNextPage();
+      await onNextPage(value);
       this.setState({ loadNextPage: false });
     } catch (e) {
       // error
@@ -105,6 +113,21 @@ class Main extends Component {
    */
   handleTabName(tabName) {
     this.setState({ currentTabName: tabName });
+  }
+
+  /**
+   * Search routes
+   *
+   * @param {string} text text typed
+   */
+  async handleChange(event) {
+    const { onSearchRoutes } = this.props;
+    const { currentTabName } = this.state;
+    this.setState({ value: event.target.value });
+    // if search in favorite, then change tab
+    if (currentTabName === 'favourites') this.setState({ currentTabName: 'routes' });
+    // search next page datas
+    await onSearchRoutes(event.target.value);
   }
 
   /**
@@ -175,6 +198,58 @@ class Main extends Component {
   }
 
   /**
+   * Render search
+   *
+   * @return component
+   */
+  renderSearch() {
+    return (
+      <ContainerSearch>
+        <div>
+          <label>
+            Name:
+            <input type="text" value={this.state.value} onChange={this.handleChange} />
+          </label>
+        </div>
+      </ContainerSearch>
+    );
+  }
+
+  /**
+   * Render search error
+   *
+   * @return component
+   */
+  renderSearchError() {
+    return (
+      <ContainerSearchError>
+        <FormattedMessage
+          id='route.errorSearch'
+          defaultMessage='No encontramos coincidencia...'>
+          {txt => (<ErrorSearchError>{txt}</ErrorSearchError>)}
+        </FormattedMessage>
+      </ContainerSearchError>
+    );
+  }
+
+  /**
+   * Render search load
+   *
+   * @return component
+   */
+  renderSearchLoad() {
+    return (
+      <SearchLoad>
+        <PulseLoader
+          size={21}
+          color={'#4ae16e'}
+          loading={true}
+        />
+      </SearchLoad>
+    );
+  }
+
+  /**
    * Render map load
    *
    * @return component
@@ -190,6 +265,7 @@ class Main extends Component {
       </MapLoad>
     );
   }
+
   /**
    * Render map error
    *
@@ -207,27 +283,100 @@ class Main extends Component {
     );
   }
 
-  render() {
-    const center = { lat: -33.4314474, lng: -70.6093325 };
-    const { currentTabName, loadNextPage } = this.state;
+  /**
+   * Render next page error
+   *
+   * @return component
+   */
+  renderNextPageError() {
+    return (
+      <ContainerSearchError>
+        <FormattedMessage
+          id='route.errorNextPage'
+          defaultMessage='No hay más resultados...'>
+          {txt => (<ErrorSearchError>{txt}</ErrorSearchError>)}
+        </FormattedMessage>
+      </ContainerSearchError>
+    );
+  }
+
+  /**
+   * Render tabs
+   *
+   * @return component
+   */
+  renderTabs() {
+    const { currentTabName } = this.state;
+
+    return (
+      <ContainerTabs>
+        <Tabs
+          selected={currentTabName}
+          onChangeTab={this.handleTabName}
+        />
+      </ContainerTabs>
+    );
+  }
+
+  /**
+   * Render tabs
+   *
+   * @return component
+   */
+  renderResults() {
+    const { currentTabName } = this.state;
     const {
       routes,
       favourites,
-      error,
-      loadShape,
-      errorShape,
       onClickToggleFavorite,
       onClickCurrent,
     } = this.props;
 
-    // if not exist entities and not exit error, then is loading
-    if (routes.entities.length === 0 && error === null) {
-      return this.renderLoading();
-    }
+    return ([
+      <ContainerResults
+        key='ContainerResults1'
+        show={currentTabName === 'routes'}
+      >
+        <RoutesList
+          items={routes.entities}
+          onClickToggleFavorite={onClickToggleFavorite}
+          onClickCurrent={onClickCurrent}
+        />
+      </ContainerResults>,
+      <ContainerResults
+        key='ContainerResults2'
+        show={currentTabName === 'favourites'}
+      >
+        <FavouritesList
+          items={favourites.entities}
+          onClickToggleFavorite={onClickToggleFavorite}
+          onClickCurrent={onClickCurrent}
+        />
+      </ContainerResults>,
+    ]);
+  }
+
+  render() {
+    const center = { lat: -33.4314474, lng: -70.6093325 };
+    const { loadNextPage, errorNextPage } = this.state;
+    const {
+      init,
+      routes,
+      error,
+      errorSearch,
+      loadShape,
+      loadSearch,
+      errorShape,
+    } = this.props;
 
     // if exist error
     if (error !== null) {
       return this.renderError(error);
+    }
+
+    // if init
+    if (init === true) {
+      return this.renderLoading();
     }
 
     return (
@@ -235,6 +384,7 @@ class Main extends Component {
         <ContainerInfo>
           <ContainerOptions>
             <Header />
+            {this.renderSearch()}
             <CurrentName>
               {
                 routes.current !== null && (
@@ -246,33 +396,17 @@ class Main extends Component {
                 )
               }
             </CurrentName>
-            <ContainerSearch></ContainerSearch>
-            <ContainerTabs>
-              <Tabs
-                selected={currentTabName}
-                onChangeTab={this.handleTabName}
-              />
-            </ContainerTabs>
+            {this.renderTabs()}
           </ContainerOptions>
-          <ContainerResults show={currentTabName === 'routes'}>
-            <RoutesList
-              items={routes.entities}
-              onClickToggleFavorite={onClickToggleFavorite}
-              onClickCurrent={onClickCurrent}
-            />
-          </ContainerResults>
-          <ContainerResults show={currentTabName === 'favourites'}>
-            <FavouritesList
-              items={favourites.entities}
-              onClickToggleFavorite={onClickToggleFavorite}
-              onClickCurrent={onClickCurrent}
-            />
-          </ContainerResults>
+          { errorSearch !== null && (this.renderSearchError())}
+          { loadSearch === true && (this.renderSearchLoad())}
+          { this.renderResults() }
           { loadNextPage === true && (this.renderNextPageLoad()) }
+          { errorNextPage !== null && (this.renderNextPageError()) }
         </ContainerInfo>
         <ContainerMap>
           { loadShape === true && (this.renderMapLoad()) }
-          { errorShape === 'empty' && (this.renderMapError()) }
+          { errorShape !== null && (this.renderMapError()) }
           <Map
             center={center}
             markers={routes.shapes}
@@ -289,12 +423,18 @@ Main.defaultProps = {
 };
 
 Main.propTypes = {
+  /** init ui state */
+  init: PropTypes.bool,
   /** error */
   error: PropTypes.string,
+  /** error search routes */
+  errorSearch: PropTypes.string,
   /** error get shape */
   errorShape: PropTypes.string,
   /** load get shape */
-  loadShape: PropTypes.string,
+  loadShape: PropTypes.bool,
+  /** load search routes */
+  loadSearch: PropTypes.bool,
   /** routes object */
   routes: PropTypes.object.isRequired,
   /** favourites object */
@@ -303,8 +443,10 @@ Main.propTypes = {
   onClickToggleFavorite: PropTypes.func.isRequired,
   /** function - active/desactive a current */
   onClickCurrent: PropTypes.func.isRequired,
-  /** acción siguiente página */
+  /** next page action */
   onNextPage: PropTypes.func.isRequired,
+  /** search routes action */
+  onSearchRoutes: PropTypes.func.isRequired,
 };
 
 
@@ -324,6 +466,17 @@ const ContainerLoading = styled.section`
   align-items: center;
   padding: 100px;
   font-weight: bold;
+`;
+
+const SearchLoad = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 200px 0 0 0;
+  font-weight: bold;
+  @media all and (max-width: 768px) {
+    padding: 100px 0 0 0;
+  }
 `;
 
 const ContainerMap = styled.section`
@@ -361,14 +514,12 @@ const ContainerOptions = styled.section`
   }
 `;
 
-const ContainerSearch = styled.section`
-  width: 100%;
-  background-color: #f00;
-  display: none;
-  min-height: 40px;
-  @media all and (max-width: 768px) {
-    display: none;
-  }
+const ContainerSearch = styled.div`
+  margin: 0;
+  display: inline-block;
+  padding: 1px 0 0 0;
+  margin: 0 0 0 0px;
+  background: #ff0;
 `;
 
 const CurrentName = styled.section`
@@ -416,6 +567,7 @@ const ContainerError = styled.section`
 
 const ErrorName = styled.span``;
 const ErrorShapeName = styled.span`color: white`;
+const ErrorSearchError = styled.span`color: #000`;
 
 const MapLoad = styled.section`
   width: 50%;
@@ -438,6 +590,17 @@ const NextPageLoad = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const ContainerSearchError = styled.section`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 150px 0 0 0;
+  @media all and (max-width: 768px) {
+    padding: 50px 0 0 0;
+  }
 `;
 
 // const Masker = styled.div``;

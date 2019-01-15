@@ -25,56 +25,71 @@ storiesOf('Index/Main', module)
   .add('Main',
     withInfo('Main - loading')(() =>
       <Main
+        init={false}
         error={null}
+        errorSearch={null}
         errorShape={null}
-        loadShape={false}
+        loadShape={null}
+        loadSearch={null}
         routes={initState}
         favourites={[]}
         onClickToggleFavorite={action('onClickToggleFavorite')}
         onClickCurrent={action('onClickCurrent')}
         onNextPage={action('onNextPage')}
+        onSearchRoutes={action('onSearchRoutes')}
       />,
     ),
   )
   .add('Main - error',
     withInfo('Main - error')(() =>
       <Main
+        init={false}
         error={'error'}
         errorShape={null}
-        loadShape={false}
+        loadShape={null}
+        loadSearch={null}
         routes={initState}
         favourites={[]}
         onClickToggleFavorite={action('onClickToggleFavorite')}
         onClickCurrent={action('onClickCurrent')}
         onNextPage={action('onNextPage')}
+        onSearchRoutes={action('onSearchRoutes')}
       />,
     ),
   )
   .add('Main - success',
     withInfo('Main - success')(() =>
       <Main
+        init={false}
         error={null}
+        errorSearch={null}
         errorShape={null}
-        loadShape={false}
+        loadShape={null}
+        loadSearch={null}
         routes={state}
         favourites={[]}
         onClickToggleFavorite={action('onClickToggleFavorite')}
         onClickCurrent={action('onClickCurrent')}
         onNextPage={action('onNextPage')}
+        onSearchRoutes={action('onSearchRoutes')}
       />,
     ),
   )
   .add('Main - loading shape',
     withInfo('Main - loading shape')(() =>
       <Main
+        init={false}
         error={null}
+        errorSearch={null}
         errorShape={null}
-        loadShape={false}
+        loadShape={null}
+        loadSearch={null}
         routes={state}
         favourites={[]}
         onClickToggleFavorite={action('onClickToggleFavorite')}
         onClickCurrent={action('onClickCurrent')}
         onNextPage={action('onNextPage')}
+        onSearchRoutes={action('onSearchRoutes')}
       />,
     ),
   );

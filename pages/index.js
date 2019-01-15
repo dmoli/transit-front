@@ -18,10 +18,16 @@ class Index extends React.Component {
   constructor() {
     super();
     this.state = {
+      /** init state of ui */
+      init: true,
       /** request get routes error */
       error: null,
+      /** request search routes error */
+      errorSearch: null,
       /** request get shape error */
       errorShape: null,
+      /** load state from search route */
+      loadSearch: null,
       /** load state from get shape */
       loadShape: false,
     };
@@ -29,6 +35,7 @@ class Index extends React.Component {
     this.handleFavourites = this.handleFavourites.bind(this);
     this.handleRoutes = this.handleRoutes.bind(this);
     this.handleNextPage = this.handleNextPage.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   /**
@@ -47,6 +54,7 @@ class Index extends React.Component {
    */
   async componentDidMount() {
     this.getRoutes();
+    this.setState({ init: false });
   }
 
   /**
@@ -66,11 +74,33 @@ class Index extends React.Component {
 
   /**
    * Get routes from actions
+   *
+   * @param {string} text text typed
    */
-  async handleNextPage() {
+  async handleNextPage(text) {
     const { actions } = this.props;
     // dispatch get next page routes
-    await actions.routes.getNextPage();
+    await actions.routes.getNextPage(text);
+  }
+
+  /**
+   * Search routes from actions
+   *
+   * @param {string} text text typed
+   */
+  async handleSearch(text) {
+    try {
+      const { actions } = this.props;
+      this.setState({
+        errorSearch: null,
+        loadSearch: true,
+      });
+      // dispatch get routes
+      await actions.routes.get(text);
+    } catch (e) {
+      this.setState({ errorSearch: e.message });
+    }
+    this.setState({ loadSearch: false });
   }
 
   /**
@@ -117,8 +147,11 @@ class Index extends React.Component {
       favourites,
     } = this.props;
     const {
+      init,
       error,
+      errorSearch,
       errorShape,
+      loadSearch,
       loadShape,
     } = this.state;
 
@@ -128,14 +161,18 @@ class Index extends React.Component {
         place='index'
       >
         <Main
+          init={init}
           error={error}
+          errorSearch={errorSearch}
           errorShape={errorShape}
           loadShape={loadShape}
+          loadSearch={loadSearch}
           routes={routes}
           favourites={favourites}
           onClickToggleFavorite={this.handleFavourites}
           onClickCurrent={this.handleRoutes}
           onNextPage={this.handleNextPage}
+          onSearchRoutes={this.handleSearch}
         />
       </Layout>
     );

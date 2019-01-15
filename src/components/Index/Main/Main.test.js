@@ -24,14 +24,18 @@ describe('<Main />', () => {
     const component = mountWithIntl(
       <Provider store={store}>
         <Main
+          init={false}
           error={null}
+          errorSearch={null}
           errorShape={null}
           loadShape={false}
+          loadSearch={null}
           routes={initState}
           favourites={[]}
           onClickToggleFavorite={() => {}}
           onClickCurrent={() => {}}
           onNextPage={() => {}}
+          onSearchRoutes={() => {}}
         />
       </Provider>,
     );
@@ -42,14 +46,18 @@ describe('<Main />', () => {
     const component = mountWithIntl(
       <Provider store={store}>
         <Main
+          init={false}
           error={'error'}
+          errorSearch={null}
           errorShape={null}
           loadShape={false}
+          loadSearch={null}
           routes={initState}
           favourites={[]}
           onClickToggleFavorite={() => {}}
           onClickCurrent={() => {}}
           onNextPage={() => {}}
+          onSearchRoutes={() => {}}
         />
       </Provider>,
     );
@@ -60,14 +68,18 @@ describe('<Main />', () => {
     const component = mountWithIntl(
       <Provider store={store}>
         <Main
+          init={false}
           error={null}
+          errorSearch={null}
           errorShape={null}
           loadShape={false}
+          loadSearch={null}
           routes={state}
           favourites={[]}
           onClickToggleFavorite={() => {}}
           onClickCurrent={() => {}}
           onNextPage={() => {}}
+          onSearchRoutes={() => {}}
         />
       </Provider>,
     );
