@@ -54,7 +54,7 @@ const MapWithControlledZoom = compose(
       path={props.markers}
       options={{
         geodesic: true,
-        strokeColor: '#FF0000',
+        strokeColor: '#e9004b',
         strokeOpacity: 1.0,
         strokeWeight: 2,
       }}
