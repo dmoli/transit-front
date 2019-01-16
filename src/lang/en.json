@@ -7,4 +7,5 @@
   "routes.errorSearch": "Ups sorry not exist routes",
   "routes.errorNextPage": "Not exits more",
   "shape.error": "Ups sorry something not work :(",
+  "favourites.error": "Ups not exist favourites",
 }

@@ -11,7 +11,6 @@ import {
 import Map from '../../Elements/Map';
 import Tabs from '../Tabs';
 import RoutesList from '../RoutesList';
-import FavouritesList from '../FavouritesList';
 
 /**
  * Main component
@@ -312,6 +311,23 @@ class Main extends Component {
   }
 
   /**
+   * Render empty favourites
+   *
+   * @return component
+   */
+  renderErrorFavourites() {
+    return (
+      <ContainerFavouritesError>
+        <FormattedMessage
+          id='favourites.error'
+          defaultMessage='Aún no tienes favoritos'>
+          {txt => (<ErrorSearchError>{txt}</ErrorSearchError>)}
+        </FormattedMessage>
+      </ContainerFavouritesError>
+    );
+  }
+
+  /**
    * Render tabs
    *
    * @return component
@@ -371,7 +387,8 @@ class Main extends Component {
         <CloseFavorite onClick={() => { this.setState({ currentTabName: 'routes' }); }}>
           <MdClose size={40} className='gray' />
         </CloseFavorite>
-        <FavouritesList
+        {favourites.entities.length === 0 && this.renderErrorFavourites()}
+        <RoutesList
           items={favourites.entities}
           onClickToggleFavorite={onClickToggleFavorite}
           onClickCurrent={onClickCurrent}
@@ -584,6 +601,7 @@ const ContainerFavourites = styled.section`
   height: 100vh;
   overflow-y: scroll;
   max-height: 100%;
+  padding: 30px 0 0 0;
   ${props => props.show === true && `
     display: block;
   `}
@@ -657,6 +675,14 @@ const ContainerSearchError = styled.section`
 `;
 
 const ContainerNextPageError = styled.section`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0px 40px 0px;
+`;
+
+const ContainerFavouritesError = styled.section`
   width: 100%;
   display: flex;
   justify-content: center;
