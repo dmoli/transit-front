@@ -519,7 +519,7 @@ const ContainerInfo = styled.section`
 const ContainerOptions = styled.section`
   position: fixed;
   width: 50%;
-  background: #fff;
+  background: #f9f9f9;
   z-index: 1;
   @media all and (max-width: 768px) {
     width: 100%;
@@ -562,7 +562,7 @@ const ContainerResults = styled.section`
   /* height: 70vh;
   overflow-y: scroll;
   max-height: 100%; */
-  padding: 150px 0 0 0;
+  padding: 133px 0 0 0;
   ${props => props.show === true && `
     display: block;
   `}

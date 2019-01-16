@@ -78,7 +78,7 @@ const ContainerTabs = styled.section`
   flex-direction: row;
   align-items: center;
   width: 90%;
-  margin: 18px 0 0 0;
+  margin: 5px 0 0 0;
 `;
 
 const Tab = styled.div`
@@ -86,7 +86,7 @@ const Tab = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 8px 0px;
+  padding: 13px 0px;
   margin: 0 20px 0 0;
   border-bottom: 3px solid transparent;
   :hover {
@@ -110,7 +110,7 @@ const Count = styled.div`
   justify-content: center;
   align-items: center;
   right: -40px;
-  top: 0;
+  top: 6px;
 `;
 
 export default Tabs;
