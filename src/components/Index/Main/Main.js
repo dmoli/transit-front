@@ -362,7 +362,7 @@ class Main extends Component {
 
   render() {
     const center = { lat: -33.4314474, lng: -70.6093325 };
-    const { loadNextPage, errorNextPage } = this.state;
+    const { currentTabName, loadNextPage, errorNextPage } = this.state;
     const {
       init,
       routes,
@@ -402,11 +402,11 @@ class Main extends Component {
             </CurrentName>
             {this.renderTabs()}
           </ContainerOptions>
-          { errorSearch !== null && (this.renderSearchError())}
-          { loadSearch === true && (this.renderSearchLoad())}
+          { currentTabName === 'routes' && errorSearch !== null && (this.renderSearchError())}
+          { currentTabName === 'routes' && loadSearch === true && (this.renderSearchLoad())}
           { this.renderResults() }
-          { loadNextPage === true && (this.renderNextPageLoad()) }
-          { errorNextPage !== null && (this.renderNextPageError()) }
+          { currentTabName === 'routes' && loadNextPage === true && (this.renderNextPageLoad()) }
+          { currentTabName === 'routes' && errorNextPage !== null && (this.renderNextPageError()) }
         </ContainerInfo>
         <ContainerMap>
           { loadShape === true && (this.renderMapLoad()) }
