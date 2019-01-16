@@ -16,6 +16,7 @@ const headers = () => ({
  */
 export const get = async (page = 1, text) => {
   try {
+    // console.log(`${API_URL}/route/search/?page=${page}&text=${text}`);
     const response = await fetch(`${API_URL}/route/search/?page=${page}&text=${text}`, {
       headers: headers(),
       method: 'get',

@@ -12,7 +12,7 @@ import { actionTypes } from './actions';
 const entitiesReducer = (state = initialState.routes.entities, action = {}) => {
   switch (action.type) {
     case actionTypes.SET_ROUTES:
-      return action.payload;
+      return action.payload.entities;
     case actionTypes.SET_NEXT_PAGE_ROUTES:
       return state.concat(action.payload);
     default:
@@ -29,7 +29,7 @@ const entitiesReducer = (state = initialState.routes.entities, action = {}) => {
 const pageReducer = (state = initialState.routes.page, action = {}) => {
   switch (action.type) {
     case actionTypes.SET_ROUTES:
-      return 1;
+      return action.payload.page;
     case actionTypes.SET_NEXT_PAGE_ROUTES:
       return state + 1;
     default:

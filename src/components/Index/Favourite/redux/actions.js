@@ -81,7 +81,7 @@ export const add = routeId => (
 
     // refresh routes
     const routesSeted = setFields(routeId, state.routes.entities, 'fav');
-    dispatch(setRoute(routesSeted));
+    dispatch(setRoute(routesSeted, state.routes.page));
   }
 );
 
@@ -112,6 +112,6 @@ export const remove = routeId => (
 
     // refresh routes
     const routesSeted = setFields(routeId, state.routes.entities, 'unfav');
-    dispatch(setRoute(routesSeted));
+    dispatch(setRoute(routesSeted, state.routes.page));
   }
 );

@@ -19,11 +19,15 @@ export const actionTypes = {
  * Modify entities
  *
  * @param {array} entities entities
+ * @param {int} page optional number page
  * @return action to dispatch
  */
-export const set = entities => ({
+export const set = (entities, page = 1) => ({
   type: actionTypes.SET_ROUTES,
-  payload: entities,
+  payload: {
+    entities,
+    page,
+  },
 });
 
 /**
@@ -109,7 +113,7 @@ export const refreshCurrent = (routeId, routeName) => (
     const state = getState();
     // refresh routes
     const routesSeted = setFields(routeId, state.routes.entities, 'current');
-    dispatch(set(routesSeted));
+    dispatch(set(routesSeted, state.routes.page));
 
     // refresh favourites
     const favouritesSeted = setFields(routeId, state.favourites.entities, 'current');
