@@ -5,9 +5,9 @@ import { FormattedMessage } from 'react-intl';
 import { PulseLoader } from 'react-spinners';
 import {
   MdClose,
+  MdSearch,
 } from 'react-icons/lib/md';
 
-import Header from '../../App/Header';
 import Map from '../../Elements/Map';
 import Tabs from '../Tabs';
 import RoutesList from '../RoutesList';
@@ -212,12 +212,16 @@ class Main extends Component {
   renderSearch() {
     return (
       <ContainerSearch>
-        <div>
-          <label>
-            Name:
-            <input type="text" value={this.state.value} onChange={this.handleChange} />
-          </label>
-        </div>
+        <Input
+          type="text"
+          value={this.state.value}
+          onChange={this.handleChange}
+          placeholder='Busca tu recorrido...'
+          className='gradient-green-bg white-place-holder'
+        />
+        <ContainerIconSearch>
+          <MdSearch size={20} className='white' />
+        </ContainerIconSearch>
       </ContainerSearch>
     );
   }
@@ -401,7 +405,6 @@ class Main extends Component {
       <ContainerMain>
         <ContainerInfo>
           <ContainerOptions>
-            <Header />
             {this.renderSearch()}
             <CurrentName>
               {
@@ -533,11 +536,26 @@ const ContainerOptions = styled.section`
 `;
 
 const ContainerSearch = styled.div`
-  margin: 0;
-  display: inline-block;
-  padding: 1px 0 0 0;
-  margin: 0 0 0 0px;
-  background: #ff0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0 0 0;
+`;
+
+const Input = styled.input`
+  padding: 10px 24px;
+  width: 90%;
+  border: none;
+  border-radius: 39px;
+  color: #fff;
+  outline: none;
+`;
+
+const ContainerIconSearch = styled.figure`
+  position: absolute;
+  right: 10%;
 `;
 
 const CurrentName = styled.section`
