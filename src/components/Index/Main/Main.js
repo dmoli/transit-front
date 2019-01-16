@@ -301,13 +301,13 @@ class Main extends Component {
    */
   renderNextPageError() {
     return (
-      <ContainerSearchError>
+      <ContainerNextPageError>
         <FormattedMessage
           id='routes.errorNextPage'
           defaultMessage='No hay más resultados...'>
           {txt => (<ErrorSearchError>{txt}</ErrorSearchError>)}
         </FormattedMessage>
-      </ContainerSearchError>
+      </ContainerNextPageError>
     );
   }
 
@@ -620,7 +620,7 @@ const ContainerError = styled.section`
 
 const ErrorName = styled.span``;
 const ErrorShapeName = styled.span`color: white`;
-const ErrorSearchError = styled.span`color: #000`;
+const ErrorSearchError = styled.span`color: #87868a`;
 
 const MapLoad = styled.section`
   width: 50%;
@@ -654,6 +654,14 @@ const ContainerSearchError = styled.section`
   @media all and (max-width: 768px) {
     padding: 50px 0 0 0;
   }
+`;
+
+const ContainerNextPageError = styled.section`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px 0px 40px 0px;
 `;
 
 // const Masker = styled.div``;
