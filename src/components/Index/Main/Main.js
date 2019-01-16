@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { PulseLoader } from 'react-spinners';
+import {
+  MdClose,
+} from 'react-icons/lib/md';
 
 import Header from '../../App/Header';
 import Map from '../../Elements/Map';
@@ -339,7 +342,6 @@ class Main extends Component {
     return ([
       <ContainerResults
         key='ContainerResults1'
-        show={currentTabName === 'routes'}
       >
         <RoutesList
           items={routes.entities}
@@ -347,16 +349,28 @@ class Main extends Component {
           onClickCurrent={onClickCurrent}
         />
       </ContainerResults>,
-      <ContainerResults
+      <ContainerFavourites
         key='ContainerResults2'
         show={currentTabName === 'favourites'}
       >
+        {currentTabName === 'favourites' && (
+          <style>
+            {`
+             body {
+               overflow-y: hidden;
+             }
+           `}
+          </style>
+        )}
+        <CloseFavorite onClick={() => { this.setState({ currentTabName: 'routes' }); }}>
+          <MdClose size={40} className='gray' />
+        </CloseFavorite>
         <FavouritesList
           items={favourites.entities}
           onClickToggleFavorite={onClickToggleFavorite}
           onClickCurrent={onClickCurrent}
         />
-      </ContainerResults>,
+      </ContainerFavourites>,
     ]);
   }
 
@@ -558,6 +572,42 @@ const ContainerResults = styled.section`
   `}
   @media all and (max-width: 768px) {
     padding: 50px 0 0 0;
+  }
+`;
+
+const ContainerFavourites = styled.section`
+  position: fixed;
+  width: 50%;
+  bottom: 0;
+  top: 0;
+  background: #fff;
+  z-index: 1;
+  height: 100vh;
+  overflow-y: scroll;
+  max-height: 100%;
+  ${props => props.show === true && `
+    display: block;
+  `}
+  ${props => props.show === false && `
+    display: none;
+  `}
+  @media all and (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+const CloseFavorite = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  font-weight: bold;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  &:hover {
+    cursor: pointer;
   }
 `;
 

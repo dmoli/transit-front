@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 import {
   FaStar,
 } from 'react-icons/lib/fa';
+import {
+  MdFavoriteOutline,
+} from 'react-icons/lib/md';
 
 /**
  * Componente ruta
@@ -56,9 +59,10 @@ class Route extends Component {
           {
             item.favorited
           }
-          <FaStar
+          <MdFavoriteOutline
             size={30}
-            className={item.favorited ? 'pointer-hover yellow' : 'pointer-hover white'}
+            color={'#d40066'}
+            className={item.favorited ? 'pointer-hover red' : 'pointer-hover white'}
           />
         </Favourite>
       </ContainerRoute>
