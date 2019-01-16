@@ -53,23 +53,21 @@ class Main extends Component {
    */
   async handleScroll() {
     try {
-      const { routes, error, onNextPage } = this.props;
-      const { value, currentTabName, loadNextPage } = this.state;
-      // stop if the next results has been called
+      const { error, onNextPage } = this.props;
+      const { value, errorNextPage, currentTabName, loadNextPage } = this.state;
+      // stop if the tabname is favourites
       if (currentTabName === 'favourites') return;
-
-      // stop when init loading
-      if (routes.entities.length === 0 && error === null) {
-        return;
-      }
 
       // stop if exist error
       if (error !== null) {
         return;
       }
 
-      // stop if the next results has been called
+      // stop if the next results is loading
       if (loadNextPage === true) return;
+
+      // stop if the next results has been empty
+      if (errorNextPage !== null) return;
 
       // get webpage objects
       const body = document.body;
@@ -99,11 +97,11 @@ class Main extends Component {
       });
       // search next page datas
       await onNextPage(value);
-      this.setState({ loadNextPage: false });
     } catch (e) {
       // error
       this.setState({ errorNextPage: e.message });
     }
+    this.setState({ loadNextPage: false });
   }
 
   /**
@@ -123,7 +121,11 @@ class Main extends Component {
   async handleChange(event) {
     const { onSearchRoutes } = this.props;
     const { currentTabName } = this.state;
-    this.setState({ value: event.target.value });
+    // set input state, and error next page to null to can search again
+    this.setState({
+      value: event.target.value,
+      errorNextPage: null,
+    });
     // if search in favorite, then change tab
     if (currentTabName === 'favourites') this.setState({ currentTabName: 'routes' });
     // search next page datas
