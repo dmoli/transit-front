@@ -3,9 +3,6 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
-  FaStar,
-} from 'react-icons/lib/fa';
-import {
   MdFavoriteOutline,
 } from 'react-icons/lib/md';
 
@@ -48,9 +45,10 @@ class Route extends Component {
         color={item.route_text_color}
         current={item.current}
         onClick={() => this.handleCurrent(item.route_id, item.route_short_name, item.current)}
+        className='white-bg'
       >
         <ContainerNames>
-          <Number>{item.route_short_name}</Number>
+          <Number color={item.route_color}>{item.route_short_name}</Number>
           <Name>{item.route_long_name}</Name>
         </ContainerNames>
         <Favourite
@@ -86,13 +84,12 @@ const ContainerRoute = styled.section`
   background-attachment: fixed;
   background-size: cover;
   background-position: center center;
-  background-color: #${props => props.background || 'fff'};
   color: #${props => props.color || '000'};
   padding: 30px;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
   width: 60%;
-  border-radius: 18px;
-  box-shadow: 0px 0px 28px -6px #000;
+  border-radius: 33px;
+  box-shadow: 0px 0px 26px -8px #4a4949;
   ${props => props.current === true && `
     background: #00f;
     color: #fff;
@@ -110,10 +107,13 @@ const ContainerNames = styled.article`
 `;
 
 const Number = styled.h1`
-  font-size: 4em;
+  font-size: 5em;
+  color: #${props => props.color || '000'};
 `;
 
-const Name = styled.article``;
+const Name = styled.article`
+  color: #87868a;
+`;
 
 const Favourite = styled.div`
   border-radius: 50%;
