@@ -96,7 +96,7 @@ class Index extends React.Component {
         loadSearch: true,
       });
       // dispatch get routes
-      await actions.routes.get(text);
+      await actions.routes.get(text, 1);
     } catch (e) {
       this.setState({ errorSearch: e.message });
     }

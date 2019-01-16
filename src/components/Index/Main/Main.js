@@ -121,6 +121,8 @@ class Main extends Component {
   async handleChange(event) {
     const { onSearchRoutes } = this.props;
     const { currentTabName } = this.state;
+    // move to scroll to top
+    window.scrollTo(0, 0);
     // set input state, and error next page to null to can search again
     this.setState({
       value: event.target.value,

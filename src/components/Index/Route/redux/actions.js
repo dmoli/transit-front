@@ -127,12 +127,13 @@ export const refreshCurrent = (routeId, routeName) => (
  * @param {object} dispatch dispatch of actions
  * @return action to dispatch
  */
-export const get = (text = '') => (
+export const get = (text = '', page = null) => (
   async (dispatch, getState) => {
     try {
       const state = getState();
+      const pageToSearch = page === null ? state.routes.page : page;
       // get response - API
-      const response = await api.get(state.routes.page, text);
+      const response = await api.get(pageToSearch, text);
       if (response.status !== 200) {
         throw new Error('error');
       }
