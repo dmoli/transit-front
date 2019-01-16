@@ -7,5 +7,5 @@
   "routes.errorSearch": "No encontramos recorridos...",
   "routes.errorNextPage": "No hay más resultados...",
   "shape.error": "No pudimos cargar el recorrido, intenta otra vez :/",
-  "favourites.error": "Aún no tienes favoritos",
+  "favourites.error": "Aún no tienes favoritos"
 }
