@@ -406,17 +406,6 @@ class Main extends Component {
         <ContainerInfo>
           <ContainerOptions>
             {this.renderSearch()}
-            <CurrentName>
-              {
-                routes.current !== null && (
-                  <FormattedMessage
-                    id='routes.labelRouteName'
-                    defaultMessage='Recorrido'>
-                    {txt => (<ErrorName>{`${txt} ${routes.current}`}</ErrorName>)}
-                  </FormattedMessage>
-                )
-              }
-            </CurrentName>
             {this.renderTabs()}
           </ContainerOptions>
           { currentTabName === 'routes' && errorSearch !== null && (this.renderSearchError())}
@@ -528,7 +517,7 @@ const ContainerInfo = styled.section`
 const ContainerOptions = styled.section`
   position: fixed;
   width: 50%;
-  background: #ccc;
+  background: #fff;
   z-index: 1;
   @media all and (max-width: 768px) {
     width: 100%;
@@ -558,22 +547,12 @@ const ContainerIconSearch = styled.figure`
   right: 10%;
 `;
 
-const CurrentName = styled.section`
-  width: 100%;
-  min-height: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 0 0 18px;
-  @media all and (max-width: 768px) {
-    display: none;
-  }
-`;
-
 const ContainerTabs = styled.section`
   width: 100%;
   display: flex;
   flex-flow: column-reverse;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ContainerResults = styled.section`

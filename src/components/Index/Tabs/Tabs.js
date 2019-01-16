@@ -36,7 +36,7 @@ class Tabs extends Component {
           <FormattedMessage
             id='tabs.routes'
             defaultMessage='Recorridos'>
-            {txt => (<TabName>{txt}</TabName>)}
+            {txt => (<TabName className='green'>{txt}</TabName>)}
           </FormattedMessage>
         </Tab>
         <Tab
@@ -46,7 +46,7 @@ class Tabs extends Component {
           <FormattedMessage
             id='tabs.favourites'
             defaultMessage='Favoritos'>
-            {txt => (<TabName>{txt}</TabName>)}
+            {txt => (<TabName className='green'>{txt}</TabName>)}
           </FormattedMessage>
         </Tab>
       </ContainerTabs>
@@ -69,20 +69,22 @@ const ContainerTabs = styled.section`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 100%;
+  width: 90%;
+  margin: 18px 0 0 0;
 `;
 
 const Tab = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 4px 13px;
+  padding: 8px 0px;
+  margin: 0 20px 0 0;
   border-bottom: 3px solid transparent;
   :hover {
     cursor: pointer;
   }
   ${props => props.selected === true && `
-    border-bottom: 3px solid #3aa0c8;
+    border-bottom: 3px solid #4ce26d;
   `}
 `;
 
