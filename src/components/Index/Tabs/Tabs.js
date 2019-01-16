@@ -25,7 +25,7 @@ class Tabs extends Component {
   }
 
   render() {
-    const { selected } = this.props;
+    const { selected, favouritesCount } = this.props;
 
     return (
       <ContainerTabs>
@@ -48,6 +48,11 @@ class Tabs extends Component {
             defaultMessage='Favoritos'>
             {txt => (<TabName className='green'>{txt}</TabName>)}
           </FormattedMessage>
+          {favouritesCount > 0 && (
+            <Count className='green-bg white'>
+              {favouritesCount}
+            </Count>
+          )}
         </Tab>
       </ContainerTabs>
     );
@@ -56,11 +61,14 @@ class Tabs extends Component {
 
 Tabs.defaultProps = {
   selected: 'routes',
+  favouritesCount: 0,
 };
 
 Tabs.propTypes = {
   /* Tab name selected */
   selected: PropTypes.string,
+  /* favourites's count  */
+  favouritesCount: PropTypes.number,
   /* function - Notify the parent component that tabs has been changed */
   onChangeTab: PropTypes.func.isRequired,
 };
@@ -74,6 +82,7 @@ const ContainerTabs = styled.section`
 `;
 
 const Tab = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,6 +99,18 @@ const Tab = styled.div`
 
 const TabName = styled.span`
   display: flex;
+`;
+
+const Count = styled.div`
+  display: flex;
+  position: absolute;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  right: -40px;
+  top: 0;
 `;
 
 export default Tabs;

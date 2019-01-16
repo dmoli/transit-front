@@ -318,12 +318,14 @@ class Main extends Component {
    */
   renderTabs() {
     const { currentTabName } = this.state;
+    const { favourites } = this.props;
 
     return (
       <ContainerTabs>
         <Tabs
           selected={currentTabName}
           onChangeTab={this.handleTabName}
+          favouritesCount={favourites.entities.length}
         />
       </ContainerTabs>
     );

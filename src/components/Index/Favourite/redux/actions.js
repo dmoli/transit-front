@@ -106,7 +106,6 @@ export const remove = routeId => (
       }
       i += 1;
     }
-    console.log('setedFavourites', setedFavourites);
     // refresh favourites
     dispatch(set(setedFavourites));
 
