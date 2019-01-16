@@ -550,6 +550,10 @@ const ContainerSearch = styled.div`
   justify-content: center;
   align-items: center;
   margin: 10px 0 0 0;
+  @media all and (max-width: 768px) {
+    position: fixed;
+    top: 0;
+  }
 `;
 
 const Input = styled.input`
@@ -587,7 +591,7 @@ const ContainerResults = styled.section`
     display: none;
   `}
   @media all and (max-width: 768px) {
-    padding: 50px 0 0 0;
+    padding: 80px 0 0 0;
   }
 `;
 

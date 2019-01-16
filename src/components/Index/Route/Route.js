@@ -134,6 +134,9 @@ const Number = styled.h1`
   ${props => props.current === true && `
     color: #fff;
   `}
+  @media all and (max-width: 768px) {
+    font-size: 4em;
+  }
 `;
 
 const Name = styled.article`
