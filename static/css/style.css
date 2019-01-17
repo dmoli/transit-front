@@ -65,13 +65,6 @@ span {
   color: rgba(128,128,128,1);
 }
 
-.gray-bg-1 {
-  background-color: #e6e6e6;
-}
-.gray-1 {
-  color: #e6e6e6;
-}
-
 .green-bg {
   background-color: #4ce26d;
 }
@@ -84,13 +77,6 @@ span {
   background: -webkit-linear-gradient(left, #09a748 0%, #00b348 50%, #00cc2c 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to right, #41a2c7 0%, #00b348 50%, #56e275 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#09a748', endColorstr='#00cc2c',GradientType=1 ); /* IE6-9 */
-}
-
-.yellow-bg {
-  background-color: #ff972c;
-}
-.yellow {
-  color: #ff972c;
 }
 
 .black-bg {
@@ -109,176 +95,8 @@ span {
 .white-place-holder::placeholder {
   color: #fff;
 }
-
-.pink-bg {
-  background-color: #dc008e;
-}
-.pink {
-  color: #dc008e;
-}
 /* end background color & colors */
 
-/* inputs text */
-.input-label-name {
-  font-weight: bold;
-  font-size: 17px;
-}
-
-.input-text-form {
-  padding: 6px 8px;
-  width: 100%;
-  border-radius: 3px;
-  height: 100%;
-  border: 1px solid;
-  font-size: inherit;
-  outline: none;
-}
-
-.input-text {
-  padding: 11px 8px;
-  width: 100%;
-  border-radius: 3px;
-  border: none;
-  color: #000;
-  background: #fff;
-  outline: none;
-}
-
-.input-text-primary {
-  border-radius: 0;
-  border-top: none;
-  border-right: none;
-  border-left: none;
-  background: transparent;
-  color: #fff;
-  border-bottom: 1px solid #fff;
-  ::-webkit-input-placeholder { color: #fff; }
-  :-moz-placeholder { color: #fff; }
-  ::-moz-placeholder { color: #fff; }
-  :-ms-input-placeholder { color: #fff; }
-}
-
-.error-input-text-primary {
-  border: 1px solid #c18f00 !important;
-}
-
-.input-text-default {
-  border-radius: 0;
-  border-top: none;
-  border-right: none;
-  border-left: none;
-  background: transparent;
-  color: #444;
-  border-bottom: 1px solid #a5a5a5;
-  ::-webkit-input-placeholder { color: #a5a5a5; }
-  :-moz-placeholder { color: #a5a5a5; }
-  ::-moz-placeholder { color: #a5a5a5; }
-  :-ms-input-placeholder { color: #a5a5a5; }
-}
-
-.input-text-default:focus {
-  border-bottom: 1px solid #5c19ae;
-}
-
-.error-input-text-default {
-  border: 1px solid #6e00c1 !important;
-}
-/* end input text */
-
-/* button */
-.btn, .btn-disabled {
-  width: 100%;
-  text-align: center;
-  font-family: 'Muli', sans-serif;
-  font-size: 14px;
-  font-weight: bold;
-  line-height: 16px;
-  min-height: 32px;
-  text-decoration: none !important;
-  padding: 14px 25px;
-  cursor: pointer;
-  border: 0px;
-  box-sizing: border-box;
-  height: auto;
-  border-radius: 35px;
-  text-transform: uppercase;
-  box-shadow: 0px 1px 8px 1px rgba(160, 159, 159, 0.22);
-  transition: background 0.2s;
-}
-
-.btn-hover {
-  box-shadow: 0px 0px 11px 4px rgb(167, 166, 166);
-}
-
-.btn:hover {
-  box-shadow: 0px 0px 11px 4px rgb(167, 166, 166);
-}
-
-.btn-disabled {
-  cursor: default;
-}
-/* end button */
-
-/* message */
-.message {
-  width: 100%;
-  padding: 20px;
-}
-/* end message */
-
-/* loading place holder */
-@keyframes placeHolderShimmer{
-  0%{
-      background-position: -468px 0
-  }
-  100%{
-      background-position: 468px 0
-  }
-}
-
-.animated-background {
-  animation-duration: 1s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: infinite;
-  animation-name: placeHolderShimmer;
-  animation-timing-function: linear;
-  background: #f6f7f8;
-  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
-  background-size: 800px 104px;
-  height: 100%;
-  position: relative;
-}
-
-.background-masker {
-  background: #fff;
-  position: absolute;
-}
-
-.input-search-loading {
-  margin: 0px 0px 0px 0px;
-  width: 100%;
-  border-color: #e5e6e9 #dfe0e4 #d0d1d5;
-  padding: 23px;
-  z-index: 1;
-}
-/* end loading place holder */
-
-/* mostrar ... en un texto */
-.ellipsis {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.description-text div span, .description-text div {
-  font-size: 16px;
-}
-
-/* gift */
-.giphy-embed {
-  position: absolute;
-}
-/* end gift */
 /*! normalize.css v6.0.0 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
