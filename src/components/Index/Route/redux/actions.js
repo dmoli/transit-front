@@ -64,6 +64,30 @@ export const setShapes = shapes => ({
 });
 
 /**
+ * Verify if a route exist in favourites
+ *
+ * @param {array} routes entities
+ * @param {array} favourites entities
+ * @return {array} entities seted
+ */
+const setFavoriteState = (routes, favourites) => {
+  const setedRoutes = JSON.parse(JSON.stringify(routes));
+  const setedFavourites = JSON.parse(JSON.stringify(favourites));
+  let i = 0;
+  for (const routeItem of setedRoutes) {
+    for (const favouriteItem of setedFavourites) {
+      if (routeItem.id === favouriteItem.id) {
+        const routeSetedItem = routeItem;
+        routeSetedItem.favorited = true;
+        setedRoutes[i] = routeSetedItem;
+      }
+    }
+    i += 1;
+  }
+  return setedRoutes;
+};
+
+/**
  * Set object fields of the array by actions
  *
  * @param {int} id id of the entity
@@ -144,14 +168,16 @@ export const get = (text = '', page = null) => (
 
       // response to json
       const data = await response.json();
+      // verify if a route exist in favourites
+      const dataSeted = setFavoriteState(data, state.favourites.entities);
       // dispatch action
-      dispatch(set(data));
+      dispatch(set(dataSeted));
       // if not exist
-      if (data.length === 0) {
+      if (dataSeted.length === 0) {
         throw new Error('empty');
       }
 
-      return data;
+      return dataSeted;
     } catch (e) {
       // error
       throw new Error(e.message);
