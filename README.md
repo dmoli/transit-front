@@ -59,6 +59,10 @@ Open `env-config.js` then edit it with the value where you have setup:
 
     $ npm run dev
 
+## API
+
+The data is getting from a test API that was developed with PHP & MySql
+
 ---
 
 ## Languages & tools
