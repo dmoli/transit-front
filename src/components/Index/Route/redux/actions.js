@@ -1,3 +1,4 @@
+/* eslint no-restricted-syntax: [0] */
 import * as api from '../../../../api/routes';
 import { set as setFavourite } from '../../Favourite/redux/actions';
 

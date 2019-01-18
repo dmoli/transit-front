@@ -16,6 +16,11 @@ const state = {
   entities: routes,
   page: 1,
 };
+const favouriteState = {
+  entities: routes,
+  page: 1,
+};
+
 
 const store = initStore();
 
@@ -31,7 +36,7 @@ describe('<Main />', () => {
           loadShape={false}
           loadSearch={null}
           routes={initState}
-          favourites={[]}
+          favourites={favouriteState}
           onClickToggleFavorite={() => {}}
           onClickCurrent={() => {}}
           onNextPage={() => {}}
@@ -53,7 +58,7 @@ describe('<Main />', () => {
           loadShape={false}
           loadSearch={null}
           routes={initState}
-          favourites={[]}
+          favourites={favouriteState}
           onClickToggleFavorite={() => {}}
           onClickCurrent={() => {}}
           onNextPage={() => {}}
@@ -75,7 +80,7 @@ describe('<Main />', () => {
           loadShape={false}
           loadSearch={null}
           routes={state}
-          favourites={[]}
+          favourites={favouriteState}
           onClickToggleFavorite={() => {}}
           onClickCurrent={() => {}}
           onNextPage={() => {}}

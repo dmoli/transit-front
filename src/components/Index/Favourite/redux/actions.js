@@ -1,3 +1,4 @@
+/* eslint no-restricted-syntax: [0] */
 import { set as setRoute } from '../../Route/redux/actions';
 
 /**

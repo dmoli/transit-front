@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Tabs /> should rendered correctly 1`] = `"<section class=\\"Tabs__ContainerTabs-sc-165jd2c-0 Qcmcy\\"><div class=\\"Tabs__Tab-sc-165jd2c-1 eAXPFc\\"><span class=\\"green Tabs__TabName-sc-165jd2c-2 kRvwt\\">Recorridos</span></div><div class=\\"Tabs__Tab-sc-165jd2c-1 bfRbTp\\"><span class=\\"green Tabs__TabName-sc-165jd2c-2 kRvwt\\">Favoritos</span></div></section>"`;

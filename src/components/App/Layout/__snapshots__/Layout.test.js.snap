@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Layout /> rendered correctly 1`] = `
+<div>
+  <main
+    className="Layout__Main-yf1p0d-0 fjWrfk"
+  />
+</div>
+`;

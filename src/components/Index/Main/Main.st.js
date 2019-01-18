@@ -18,21 +18,25 @@ const state = {
   entities: routes,
   page: 1,
 };
+const favouriteState = {
+  entities: routes,
+  page: 1,
+};
 const store = initStore();
 
 storiesOf('Index/Main', module)
   .addDecorator(story => <Provider store={store}>{story()}</Provider>)
-  .add('Main',
+  .add('Main - loading',
     withInfo('Main - loading')(() =>
       <Main
-        init={false}
+        init={true}
         error={null}
         errorSearch={null}
         errorShape={null}
         loadShape={null}
         loadSearch={null}
         routes={initState}
-        favourites={[]}
+        favourites={favouriteState}
         onClickToggleFavorite={action('onClickToggleFavorite')}
         onClickCurrent={action('onClickCurrent')}
         onNextPage={action('onNextPage')}
@@ -49,7 +53,7 @@ storiesOf('Index/Main', module)
         loadShape={null}
         loadSearch={null}
         routes={initState}
-        favourites={[]}
+        favourites={favouriteState}
         onClickToggleFavorite={action('onClickToggleFavorite')}
         onClickCurrent={action('onClickCurrent')}
         onNextPage={action('onNextPage')}
@@ -67,7 +71,7 @@ storiesOf('Index/Main', module)
         loadShape={null}
         loadSearch={null}
         routes={state}
-        favourites={[]}
+        favourites={favouriteState}
         onClickToggleFavorite={action('onClickToggleFavorite')}
         onClickCurrent={action('onClickCurrent')}
         onNextPage={action('onNextPage')}
@@ -82,10 +86,10 @@ storiesOf('Index/Main', module)
         error={null}
         errorSearch={null}
         errorShape={null}
-        loadShape={null}
+        loadShape={true}
         loadSearch={null}
         routes={state}
-        favourites={[]}
+        favourites={favouriteState}
         onClickToggleFavorite={action('onClickToggleFavorite')}
         onClickCurrent={action('onClickCurrent')}
         onNextPage={action('onNextPage')}

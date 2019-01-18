@@ -19,6 +19,7 @@ storiesOf('Index/RouterList', module)
       <RouterList
         items={routes}
         onClickToggleFavorite={action('onClickToggleFavorite')}
+        onClickCurrent={action('onClickCurrent')}
       />,
     ),
   );

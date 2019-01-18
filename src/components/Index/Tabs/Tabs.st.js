@@ -18,4 +18,12 @@ storiesOf('Index/Tabs', module)
         onChangeTab={action('onChangeTab')}
       />,
     ),
+  )
+  .add('Tabs - with favourite',
+    withInfo('Tabs - with favourite')(() =>
+      <Tabs
+        onChangeTab={action('onChangeTab')}
+        favouritesCount={19}
+      />,
+    ),
   );

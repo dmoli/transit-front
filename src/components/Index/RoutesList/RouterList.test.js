@@ -13,6 +13,7 @@ describe('<RouterList />', () => {
       <RouterList
         items={routes}
         onClickToggleFavorite={() => {}}
+        onClickCurrent={() => {}}
       />,
     );
     const tree = component.toJSON();
